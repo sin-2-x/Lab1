@@ -220,7 +220,7 @@ namespace lab1 {
           //path.AddEllipse(label.ClientRectangle);
           //path.AddRectangle(label.ClientRectangle);
           //label.Region = new Region(path);
-          
+          //
           drawList.Add(nodeDraw);
           //pictureBox.AutoScrollOffset
           pictureBox.Controls.Add(nodeDraw);
