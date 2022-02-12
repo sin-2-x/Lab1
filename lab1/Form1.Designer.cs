@@ -94,7 +94,7 @@ namespace lab1
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
       this.scrollPanel.AutoScroll = true;
-      this.scrollPanel.BackColor = System.Drawing.SystemColors.Highlight;
+      this.scrollPanel.BackColor = System.Drawing.SystemColors.Desktop;
       this.scrollPanel.Controls.Add(this.pictureBox);
       this.scrollPanel.Location = new System.Drawing.Point(0, 100);
       this.scrollPanel.Name = "scrollPanel";
@@ -103,13 +103,14 @@ namespace lab1
       // 
       // pictureBox
       // 
-      this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.pictureBox.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
       this.pictureBox.Location = new System.Drawing.Point(0, 0);
       this.pictureBox.Name = "pictureBox";
       this.pictureBox.Size = new System.Drawing.Size(782, 354);
-      this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+      this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
       this.pictureBox.TabIndex = 0;
       this.pictureBox.TabStop = false;
+      this.pictureBox.ControlAdded += new System.Windows.Forms.ControlEventHandler(this.pictureBox_ControlAdded);
       // 
       // Form1
       // 
@@ -126,7 +127,6 @@ namespace lab1
       this.Text = "Form1";
       this.Load += new System.EventHandler(this.Form1_Load);
       this.scrollPanel.ResumeLayout(false);
-      this.scrollPanel.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
