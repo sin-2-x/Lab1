@@ -29,64 +29,35 @@ namespace lab1
         /// </summary>
         private void InitializeComponent()
         {
-      this.sequenceTextBox = new System.Windows.Forms.TextBox();
-      this.randomBtn = new System.Windows.Forms.Button();
-      this.button2 = new System.Windows.Forms.Button();
-      this.startBtn = new System.Windows.Forms.Button();
       this.scrollPanel = new System.Windows.Forms.Panel();
       this.pictureBox = new System.Windows.Forms.PictureBox();
+      this.tabControl = new System.Windows.Forms.TabControl();
+      this.tabRandom = new System.Windows.Forms.TabPage();
+      this.buttonAddRandom = new System.Windows.Forms.Button();
+      this.textRandomInput = new System.Windows.Forms.TextBox();
+      this.labelRandom = new System.Windows.Forms.Label();
+      this.buttonStartRandom = new System.Windows.Forms.Button();
+      this.textRandomOutput = new System.Windows.Forms.TextBox();
+      this.tabKeyboard = new System.Windows.Forms.TabPage();
+      this.labelKeyboard = new System.Windows.Forms.Label();
+      this.buttonStartKeyboard = new System.Windows.Forms.Button();
+      this.buttonAddKeyboard = new System.Windows.Forms.Button();
+      this.textKeyboardInput = new System.Windows.Forms.TextBox();
+      this.tabFile = new System.Windows.Forms.TabPage();
+      this.buttonOpenFile = new System.Windows.Forms.Button();
+      this.buttonStartFile = new System.Windows.Forms.Button();
+      this.buttonAddFile = new System.Windows.Forms.Button();
+      this.textFileOutput = new System.Windows.Forms.TextBox();
+      this.buttonRemoveFile = new System.Windows.Forms.Button();
+      this.buttonRemoveKeyboard = new System.Windows.Forms.Button();
+      this.buttonRemoveRandom = new System.Windows.Forms.Button();
       this.scrollPanel.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
+      this.tabControl.SuspendLayout();
+      this.tabRandom.SuspendLayout();
+      this.tabKeyboard.SuspendLayout();
+      this.tabFile.SuspendLayout();
       this.SuspendLayout();
-      // 
-      // sequenceTextBox
-      // 
-      this.sequenceTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-      this.sequenceTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-      this.sequenceTextBox.Location = new System.Drawing.Point(186, 21);
-      this.sequenceTextBox.Margin = new System.Windows.Forms.Padding(999);
-      this.sequenceTextBox.MinimumSize = new System.Drawing.Size(100, 4);
-      this.sequenceTextBox.Multiline = true;
-      this.sequenceTextBox.Name = "sequenceTextBox";
-      this.sequenceTextBox.Size = new System.Drawing.Size(409, 58);
-      this.sequenceTextBox.TabIndex = 1;
-      this.sequenceTextBox.TextChanged += new System.EventHandler(this.sequenceTextBoxChanged);
-      // 
-      // randomBtn
-      // 
-      this.randomBtn.AutoSize = true;
-      this.randomBtn.Location = new System.Drawing.Point(88, 19);
-      this.randomBtn.MinimumSize = new System.Drawing.Size(80, 0);
-      this.randomBtn.Name = "randomBtn";
-      this.randomBtn.Size = new System.Drawing.Size(80, 27);
-      this.randomBtn.TabIndex = 4;
-      this.randomBtn.Text = "Random";
-      this.randomBtn.UseVisualStyleBackColor = true;
-      this.randomBtn.Click += new System.EventHandler(this.randomBtn_Click);
-      // 
-      // button2
-      // 
-      this.button2.AutoSize = true;
-      this.button2.Location = new System.Drawing.Point(88, 52);
-      this.button2.MinimumSize = new System.Drawing.Size(80, 0);
-      this.button2.Name = "button2";
-      this.button2.Size = new System.Drawing.Size(80, 27);
-      this.button2.TabIndex = 5;
-      this.button2.Text = "Open file";
-      this.button2.UseVisualStyleBackColor = true;
-      this.button2.Click += new System.EventHandler(this.button2_Click);
-      // 
-      // startBtn
-      // 
-      this.startBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.startBtn.Location = new System.Drawing.Point(606, 21);
-      this.startBtn.Name = "startBtn";
-      this.startBtn.Size = new System.Drawing.Size(75, 58);
-      this.startBtn.TabIndex = 6;
-      this.startBtn.Text = "Start";
-      this.startBtn.UseVisualStyleBackColor = true;
-      this.startBtn.Click += new System.EventHandler(this.startBtn_Click);
       // 
       // scrollPanel
       // 
@@ -94,53 +65,310 @@ namespace lab1
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
       this.scrollPanel.AutoScroll = true;
-      this.scrollPanel.BackColor = System.Drawing.SystemColors.Desktop;
+      this.scrollPanel.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
       this.scrollPanel.Controls.Add(this.pictureBox);
-      this.scrollPanel.Location = new System.Drawing.Point(0, 100);
+      this.scrollPanel.Location = new System.Drawing.Point(0, 103);
+      this.scrollPanel.Margin = new System.Windows.Forms.Padding(0);
       this.scrollPanel.Name = "scrollPanel";
-      this.scrollPanel.Size = new System.Drawing.Size(782, 354);
+      this.scrollPanel.Size = new System.Drawing.Size(781, 386);
       this.scrollPanel.TabIndex = 7;
+      this.scrollPanel.SizeChanged += new System.EventHandler(this.scrollPanel_SizeChanged);
       // 
       // pictureBox
       // 
       this.pictureBox.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
       this.pictureBox.Location = new System.Drawing.Point(0, 0);
+      this.pictureBox.Margin = new System.Windows.Forms.Padding(0);
       this.pictureBox.Name = "pictureBox";
-      this.pictureBox.Size = new System.Drawing.Size(782, 354);
+      this.pictureBox.Size = new System.Drawing.Size(781, 386);
       this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
       this.pictureBox.TabIndex = 0;
       this.pictureBox.TabStop = false;
-      this.pictureBox.ControlAdded += new System.Windows.Forms.ControlEventHandler(this.pictureBox_ControlAdded);
+      // 
+      // tabControl
+      // 
+      this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.tabControl.Controls.Add(this.tabRandom);
+      this.tabControl.Controls.Add(this.tabKeyboard);
+      this.tabControl.Controls.Add(this.tabFile);
+      this.tabControl.Location = new System.Drawing.Point(64, 1);
+      this.tabControl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+      this.tabControl.Name = "tabControl";
+      this.tabControl.SelectedIndex = 0;
+      this.tabControl.Size = new System.Drawing.Size(657, 100);
+      this.tabControl.TabIndex = 1;
+      this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
+      // 
+      // tabRandom
+      // 
+      this.tabRandom.Controls.Add(this.buttonRemoveRandom);
+      this.tabRandom.Controls.Add(this.buttonAddRandom);
+      this.tabRandom.Controls.Add(this.textRandomInput);
+      this.tabRandom.Controls.Add(this.labelRandom);
+      this.tabRandom.Controls.Add(this.buttonStartRandom);
+      this.tabRandom.Controls.Add(this.textRandomOutput);
+      this.tabRandom.Location = new System.Drawing.Point(4, 25);
+      this.tabRandom.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+      this.tabRandom.Name = "tabRandom";
+      this.tabRandom.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+      this.tabRandom.Size = new System.Drawing.Size(649, 71);
+      this.tabRandom.TabIndex = 1;
+      this.tabRandom.Text = "Random";
+      this.tabRandom.UseVisualStyleBackColor = true;
+      // 
+      // buttonAddRandom
+      // 
+      this.buttonAddRandom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.buttonAddRandom.Location = new System.Drawing.Point(512, 27);
+      this.buttonAddRandom.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+      this.buttonAddRandom.Name = "buttonAddRandom";
+      this.buttonAddRandom.Size = new System.Drawing.Size(32, 23);
+      this.buttonAddRandom.TabIndex = 5;
+      this.buttonAddRandom.Text = "+";
+      this.buttonAddRandom.UseVisualStyleBackColor = true;
+      this.buttonAddRandom.Click += new System.EventHandler(this.button2_Click_1);
+      // 
+      // textRandomInput
+      // 
+      this.textRandomInput.Location = new System.Drawing.Point(152, 27);
+      this.textRandomInput.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+      this.textRandomInput.Name = "textRandomInput";
+      this.textRandomInput.Size = new System.Drawing.Size(91, 22);
+      this.textRandomInput.TabIndex = 4;
+      this.textRandomInput.TextChanged += new System.EventHandler(this.textRandomInput_TextChanged);
+      // 
+      // labelRandom
+      // 
+      this.labelRandom.AutoSize = true;
+      this.labelRandom.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.labelRandom.Location = new System.Drawing.Point(3, 28);
+      this.labelRandom.Name = "labelRandom";
+      this.labelRandom.Size = new System.Drawing.Size(141, 18);
+      this.labelRandom.TabIndex = 3;
+      this.labelRandom.Text = "Количество узлов:";
+      this.labelRandom.Click += new System.EventHandler(this.label1_Click);
+      // 
+      // buttonStartRandom
+      // 
+      this.buttonStartRandom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.buttonStartRandom.Location = new System.Drawing.Point(549, 27);
+      this.buttonStartRandom.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+      this.buttonStartRandom.Name = "buttonStartRandom";
+      this.buttonStartRandom.Size = new System.Drawing.Size(75, 23);
+      this.buttonStartRandom.TabIndex = 1;
+      this.buttonStartRandom.Text = "Start";
+      this.buttonStartRandom.UseVisualStyleBackColor = true;
+      // 
+      // textRandomOutput
+      // 
+      this.textRandomOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.textRandomOutput.Location = new System.Drawing.Point(249, 27);
+      this.textRandomOutput.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+      this.textRandomOutput.Name = "textRandomOutput";
+      this.textRandomOutput.Size = new System.Drawing.Size(219, 22);
+      this.textRandomOutput.TabIndex = 0;
+      // 
+      // tabKeyboard
+      // 
+      this.tabKeyboard.Controls.Add(this.buttonRemoveKeyboard);
+      this.tabKeyboard.Controls.Add(this.labelKeyboard);
+      this.tabKeyboard.Controls.Add(this.buttonStartKeyboard);
+      this.tabKeyboard.Controls.Add(this.buttonAddKeyboard);
+      this.tabKeyboard.Controls.Add(this.textKeyboardInput);
+      this.tabKeyboard.Location = new System.Drawing.Point(4, 25);
+      this.tabKeyboard.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+      this.tabKeyboard.Name = "tabKeyboard";
+      this.tabKeyboard.Size = new System.Drawing.Size(649, 71);
+      this.tabKeyboard.TabIndex = 2;
+      this.tabKeyboard.Text = "Keyboard";
+      this.tabKeyboard.UseVisualStyleBackColor = true;
+      // 
+      // labelKeyboard
+      // 
+      this.labelKeyboard.AutoSize = true;
+      this.labelKeyboard.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.labelKeyboard.Location = new System.Drawing.Point(3, 30);
+      this.labelKeyboard.Name = "labelKeyboard";
+      this.labelKeyboard.Size = new System.Drawing.Size(123, 18);
+      this.labelKeyboard.TabIndex = 8;
+      this.labelKeyboard.Text = "Значения узлов:";
+      // 
+      // buttonStartKeyboard
+      // 
+      this.buttonStartKeyboard.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.buttonStartKeyboard.Location = new System.Drawing.Point(549, 28);
+      this.buttonStartKeyboard.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+      this.buttonStartKeyboard.Name = "buttonStartKeyboard";
+      this.buttonStartKeyboard.Size = new System.Drawing.Size(75, 23);
+      this.buttonStartKeyboard.TabIndex = 7;
+      this.buttonStartKeyboard.Text = "Start";
+      this.buttonStartKeyboard.UseVisualStyleBackColor = true;
+      // 
+      // buttonAddKeyboard
+      // 
+      this.buttonAddKeyboard.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.buttonAddKeyboard.Location = new System.Drawing.Point(512, 28);
+      this.buttonAddKeyboard.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+      this.buttonAddKeyboard.Name = "buttonAddKeyboard";
+      this.buttonAddKeyboard.Size = new System.Drawing.Size(32, 23);
+      this.buttonAddKeyboard.TabIndex = 6;
+      this.buttonAddKeyboard.Text = "+";
+      this.buttonAddKeyboard.UseVisualStyleBackColor = true;
+      // 
+      // textKeyboardInput
+      // 
+      this.textKeyboardInput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.textKeyboardInput.Location = new System.Drawing.Point(143, 28);
+      this.textKeyboardInput.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+      this.textKeyboardInput.Name = "textKeyboardInput";
+      this.textKeyboardInput.Size = new System.Drawing.Size(325, 22);
+      this.textKeyboardInput.TabIndex = 0;
+      this.textKeyboardInput.TextChanged += new System.EventHandler(this.textKeyboardInput_TextChanged);
+      // 
+      // tabFile
+      // 
+      this.tabFile.Controls.Add(this.buttonRemoveFile);
+      this.tabFile.Controls.Add(this.buttonOpenFile);
+      this.tabFile.Controls.Add(this.buttonStartFile);
+      this.tabFile.Controls.Add(this.buttonAddFile);
+      this.tabFile.Controls.Add(this.textFileOutput);
+      this.tabFile.Location = new System.Drawing.Point(4, 25);
+      this.tabFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+      this.tabFile.Name = "tabFile";
+      this.tabFile.Size = new System.Drawing.Size(649, 71);
+      this.tabFile.TabIndex = 3;
+      this.tabFile.Text = "File";
+      this.tabFile.UseVisualStyleBackColor = true;
+      this.tabFile.Click += new System.EventHandler(this.tabFile_Click);
+      // 
+      // buttonOpenFile
+      // 
+      this.buttonOpenFile.Location = new System.Drawing.Point(12, 23);
+      this.buttonOpenFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+      this.buttonOpenFile.Name = "buttonOpenFile";
+      this.buttonOpenFile.Size = new System.Drawing.Size(85, 25);
+      this.buttonOpenFile.TabIndex = 13;
+      this.buttonOpenFile.Text = "Open file";
+      this.buttonOpenFile.UseVisualStyleBackColor = true;
+      this.buttonOpenFile.Click += new System.EventHandler(this.buttonOpenFile_Click);
+      // 
+      // buttonStartFile
+      // 
+      this.buttonStartFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.buttonStartFile.Location = new System.Drawing.Point(549, 25);
+      this.buttonStartFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+      this.buttonStartFile.Name = "buttonStartFile";
+      this.buttonStartFile.Size = new System.Drawing.Size(75, 23);
+      this.buttonStartFile.TabIndex = 12;
+      this.buttonStartFile.Text = "Start";
+      this.buttonStartFile.UseVisualStyleBackColor = true;
+      // 
+      // buttonAddFile
+      // 
+      this.buttonAddFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.buttonAddFile.Location = new System.Drawing.Point(512, 25);
+      this.buttonAddFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+      this.buttonAddFile.Name = "buttonAddFile";
+      this.buttonAddFile.Size = new System.Drawing.Size(32, 23);
+      this.buttonAddFile.TabIndex = 11;
+      this.buttonAddFile.Text = "+";
+      this.buttonAddFile.UseVisualStyleBackColor = true;
+      // 
+      // textFileOutput
+      // 
+      this.textFileOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.textFileOutput.Location = new System.Drawing.Point(103, 25);
+      this.textFileOutput.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+      this.textFileOutput.Name = "textFileOutput";
+      this.textFileOutput.Size = new System.Drawing.Size(365, 22);
+      this.textFileOutput.TabIndex = 10;
+      this.textFileOutput.TextChanged += new System.EventHandler(this.textFileOutput_TextChanged);
+      // 
+      // buttonRemoveFile
+      // 
+      this.buttonRemoveFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.buttonRemoveFile.Location = new System.Drawing.Point(474, 24);
+      this.buttonRemoveFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+      this.buttonRemoveFile.Name = "buttonRemoveFile";
+      this.buttonRemoveFile.Size = new System.Drawing.Size(32, 23);
+      this.buttonRemoveFile.TabIndex = 14;
+      this.buttonRemoveFile.Text = "-";
+      this.buttonRemoveFile.UseVisualStyleBackColor = true;
+      // 
+      // buttonRemoveKeyboard
+      // 
+      this.buttonRemoveKeyboard.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.buttonRemoveKeyboard.Location = new System.Drawing.Point(474, 27);
+      this.buttonRemoveKeyboard.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+      this.buttonRemoveKeyboard.Name = "buttonRemoveKeyboard";
+      this.buttonRemoveKeyboard.Size = new System.Drawing.Size(32, 23);
+      this.buttonRemoveKeyboard.TabIndex = 15;
+      this.buttonRemoveKeyboard.Text = "-";
+      this.buttonRemoveKeyboard.UseVisualStyleBackColor = true;
+      // 
+      // buttonRemoveRandom
+      // 
+      this.buttonRemoveRandom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.buttonRemoveRandom.Location = new System.Drawing.Point(474, 27);
+      this.buttonRemoveRandom.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+      this.buttonRemoveRandom.Name = "buttonRemoveRandom";
+      this.buttonRemoveRandom.Size = new System.Drawing.Size(32, 23);
+      this.buttonRemoveRandom.TabIndex = 15;
+      this.buttonRemoveRandom.Text = "-";
+      this.buttonRemoveRandom.UseVisualStyleBackColor = true;
       // 
       // Form1
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(782, 453);
+      this.ClientSize = new System.Drawing.Size(781, 489);
+      this.Controls.Add(this.tabControl);
       this.Controls.Add(this.scrollPanel);
-      this.Controls.Add(this.startBtn);
-      this.Controls.Add(this.button2);
-      this.Controls.Add(this.randomBtn);
-      this.Controls.Add(this.sequenceTextBox);
-      this.MinimumSize = new System.Drawing.Size(500, 500);
+      this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+      this.MinimumSize = new System.Drawing.Size(699, 499);
       this.Name = "Form1";
       this.Text = "Form1";
       this.Load += new System.EventHandler(this.Form1_Load);
       this.scrollPanel.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
+      this.tabControl.ResumeLayout(false);
+      this.tabRandom.ResumeLayout(false);
+      this.tabRandom.PerformLayout();
+      this.tabKeyboard.ResumeLayout(false);
+      this.tabKeyboard.PerformLayout();
+      this.tabFile.ResumeLayout(false);
+      this.tabFile.PerformLayout();
       this.ResumeLayout(false);
-      this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox sequenceTextBox;
-        private System.Windows.Forms.Button randomBtn;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button startBtn;
     private System.Windows.Forms.Panel scrollPanel;
     private System.Windows.Forms.PictureBox pictureBox;
+    private System.Windows.Forms.TabControl tabControl;
+    private System.Windows.Forms.TabPage tabRandom;
+    private System.Windows.Forms.TabPage tabKeyboard;
+    private System.Windows.Forms.TabPage tabFile;
+    private System.Windows.Forms.Button buttonStartRandom;
+    private System.Windows.Forms.TextBox textRandomOutput;
+    private System.Windows.Forms.TextBox textKeyboardInput;
+    private System.Windows.Forms.Label labelRandom;
+    private System.Windows.Forms.Button buttonAddRandom;
+    private System.Windows.Forms.TextBox textRandomInput;
+    private System.Windows.Forms.Label labelKeyboard;
+    private System.Windows.Forms.Button buttonStartKeyboard;
+    private System.Windows.Forms.Button buttonAddKeyboard;
+    private System.Windows.Forms.Button buttonOpenFile;
+    private System.Windows.Forms.Button buttonStartFile;
+    private System.Windows.Forms.Button buttonAddFile;
+    private System.Windows.Forms.TextBox textFileOutput;
+    private System.Windows.Forms.Button buttonRemoveRandom;
+    private System.Windows.Forms.Button buttonRemoveKeyboard;
+    private System.Windows.Forms.Button buttonRemoveFile;
   }
 }
 
