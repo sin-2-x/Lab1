@@ -11,12 +11,18 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace lab1 {
+  public enum Tabindex {
+    Random = 1,
+    Keyboard,
+    File
+  }
   public partial class Form1 : Form {
     public Form1() {
       InitializeComponent();
     }
 
     private void Form1_Load(object sender, EventArgs e) {
+      
       //randomBtn.BackColor = Color.FromArgb(252, 81, 133);
 
       // Sizes the tabs of tabControl1.
@@ -24,22 +30,31 @@ namespace lab1 {
       buttonStartKeyboard.Click += new EventHandler(this.startBtn_Click);
       buttonStartFile.Click += new EventHandler(this.startBtn_Click);
 
+      /*buttonRemoveFile.Click += new EventHandler();
+      buttonRemoveKeyboard.Click += new EventHandler();
+      buttonRemoveRandom.Click += new EventHandler();*/
+
       textRandomOutput.Enabled = false;
+      textRandomOutput.ReadOnly = true;
       textFileOutput.Enabled = false;
+      textFileOutput.ReadOnly = true;
 
       // Makes the tab width definable. 
       this.tabControl.SizeMode = TabSizeMode.Fixed;
 
 
+      buttonAddFile.Click += new EventHandler(this.buttonAdd_Click);
+       buttonAddKeyboard.Click += new EventHandler(this.buttonAdd_Click);
+       buttonAddRandom.Click += new EventHandler(this.buttonAdd_Click);
 
 
 
-   
+
     }
 
 
 
-   
+
 
     BinaryTree tree = null;
 
@@ -95,59 +110,62 @@ namespace lab1 {
      }*/
 
 
-    private void startBtn_Click(object sender, EventArgs e) {
-
+    private void plantTree() {
       string sequenceTextForStart = "";
       Input InputWay = null;
       switch (tabControl.SelectedTab.TabIndex) {
-        case 1:
+        case (int)Tabindex.Random:
           InputWay = new RandomInput();
           sequenceTextForStart = textRandomInput.Text;
 
           break;
-        case 2:
+        case (int)Tabindex.Keyboard:
           InputWay = new KeyboardInput();
           sequenceTextForStart = textKeyboardInput.Text;
           break;
-        case 3:
+        case (int)Tabindex.File:
           InputWay = new FileInput();
           sequenceTextForStart = textFileOutput.Text;
           break;
       }
-      int[] arr = InputWay.input(sequenceTextForStart); //нужный массив
+      if (sequenceTextForStart.Length > 0) {
+        int[] arr = InputWay.input(sequenceTextForStart); //нужный массив
 
-      tree = new BinaryTree();
-      for (int i = 0; i < arr.Length; i++) {
-        tree.Insert(arr[i]);
-        //Console.WriteLine(" " + arr[i] + " ");
-      }
-
-      if (tabControl.SelectedTab.TabIndex == 1) {
-        textRandomOutput.Text = "";
-        textRandomOutput.Enabled = true;
+        tree = new BinaryTree();
         for (int i = 0; i < arr.Length; i++) {
-
-          textRandomOutput.Text += arr[i] + " ";
-          
+          tree.Insert(arr[i]);
+          //Console.WriteLine(" " + arr[i] + " ");
         }
 
+        if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Random) {
+          textRandomOutput.Text = "";
+          textRandomOutput.Enabled = true;
+          for (int i = 0; i < arr.Length; i++) {
+
+            textRandomOutput.Text += arr[i] + " ";
+
+          }
+
+        }
+
+        else if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Keyboard) {
+
+          textKeyboardInput.ReadOnly = true;
+
+        }
+
+        pictureBox.Size = new Size(scrollPanel.Width, scrollPanel.Height); //set min size and hide scrolls
+        clearPictureBox();
+        Print(tree, pictureBox);
+
+        //scrollPanel.Size = new Size(pictureBox.Width, pictureBox.Height);
+        //LineForDraw.drawLine(pictureBox);
+        pictureBox.Update();
+        drawLine();
       }
-
-      else if (tabControl.SelectedTab.TabIndex == 3) {
-
-        
-        
-      }
-
-      pictureBox.Size = new Size(scrollPanel.Width, scrollPanel.Height); //set min size and hide scrolls
-      clearPictureBox();
-      Print(tree, pictureBox);
-       
-      //scrollPanel.Size = new Size(pictureBox.Width, pictureBox.Height);
-      //LineForDraw.drawLine(pictureBox);
-      pictureBox.Update();
-      drawLine();
-      //}
+    }
+    private void startBtn_Click(object sender, EventArgs e) {
+      plantTree();
     }
     private void clearPictureBox() {
       pictureBox.Controls.Clear();
@@ -316,17 +334,7 @@ namespace lab1 {
       drawLine();
     }
 
-    private void tabFile_Click(object sender, EventArgs e) {
-      
-    }
 
-    private void label1_Click(object sender, EventArgs e) {
-
-    }
-
-    private void button2_Click_1(object sender, EventArgs e) {
-
-    }
 
 
 
@@ -378,7 +386,7 @@ namespace lab1 {
       textFileOutput.Text = "";
       textFileOutput.Enabled = false;
 
-
+      textKeyboardInput.ReadOnly = false;
 
     }
     //string FileTextBoxLastCorrect = "";
@@ -426,6 +434,57 @@ namespace lab1 {
       textKeyboardInput.Text = sequenceTextNewValue;
       KeyboardTextBoxLastCorrect = sequenceTextNewValue;
       return;*/
+    }
+    Form2 newForm = null;
+    private void buttonAdd_Click(object sender, EventArgs e) {
+       newForm = new Form2();
+      newForm.Owner = this;
+      //newForm.textAddNumber.Text = 
+      newForm.Show();
+      newForm.buttonAdd.Click += new EventHandler(this.addToTree);
+    }
+
+    private void addToTree(object sender, EventArgs e) {
+      if (newForm.textAddNumber.Text.Length > 0) {
+        int newNode = int.Parse(newForm.textAddNumber.Text);
+        if (tree == null || tree.Find(newNode) == null) {
+          if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Random) {
+            textRandomOutput.Text += newForm.textAddNumber.Text + " ";
+            if(textRandomInput.Text.Length>0)
+            textRandomInput.Text = (int.Parse(textRandomInput.Text)+1).ToString();
+            else
+              textRandomInput.Text = 1.ToString();
+
+          }
+          else if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Keyboard) {
+            textKeyboardInput.Text += " " + newForm.textAddNumber.Text + " ";
+            //newNode = int.Parse(newForm.textAddNumber.Text);
+          }
+          else {
+            textFileOutput.Text += " " + newForm.textAddNumber.Text + " ";
+            //newNode = int.Parse(newForm.textAddNumber.Text);
+          }
+
+          ///////////////
+          if (tree == null)
+            tree = new BinaryTree();
+          tree.Insert(newNode);
+          Print(tree, pictureBox);
+        }
+        
+          
+        
+      }
+
+      newForm.Close();
+    }
+
+    private void buttonStartRandom_Click(object sender, EventArgs e) {
+
+    }
+
+    private void pictureBox_Paint(object sender, PaintEventArgs e) {
+      drawLine();
     }
   }
 }

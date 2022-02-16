@@ -33,24 +33,24 @@ namespace lab1
       this.pictureBox = new System.Windows.Forms.PictureBox();
       this.tabControl = new System.Windows.Forms.TabControl();
       this.tabRandom = new System.Windows.Forms.TabPage();
+      this.buttonRemoveRandom = new System.Windows.Forms.Button();
       this.buttonAddRandom = new System.Windows.Forms.Button();
       this.textRandomInput = new System.Windows.Forms.TextBox();
       this.labelRandom = new System.Windows.Forms.Label();
       this.buttonStartRandom = new System.Windows.Forms.Button();
       this.textRandomOutput = new System.Windows.Forms.TextBox();
       this.tabKeyboard = new System.Windows.Forms.TabPage();
+      this.buttonRemoveKeyboard = new System.Windows.Forms.Button();
       this.labelKeyboard = new System.Windows.Forms.Label();
       this.buttonStartKeyboard = new System.Windows.Forms.Button();
       this.buttonAddKeyboard = new System.Windows.Forms.Button();
       this.textKeyboardInput = new System.Windows.Forms.TextBox();
       this.tabFile = new System.Windows.Forms.TabPage();
+      this.buttonRemoveFile = new System.Windows.Forms.Button();
       this.buttonOpenFile = new System.Windows.Forms.Button();
       this.buttonStartFile = new System.Windows.Forms.Button();
       this.buttonAddFile = new System.Windows.Forms.Button();
       this.textFileOutput = new System.Windows.Forms.TextBox();
-      this.buttonRemoveFile = new System.Windows.Forms.Button();
-      this.buttonRemoveKeyboard = new System.Windows.Forms.Button();
-      this.buttonRemoveRandom = new System.Windows.Forms.Button();
       this.scrollPanel.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
       this.tabControl.SuspendLayout();
@@ -84,6 +84,7 @@ namespace lab1
       this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
       this.pictureBox.TabIndex = 0;
       this.pictureBox.TabStop = false;
+      this.pictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox_Paint);
       // 
       // tabControl
       // 
@@ -117,6 +118,17 @@ namespace lab1
       this.tabRandom.Text = "Random";
       this.tabRandom.UseVisualStyleBackColor = true;
       // 
+      // buttonRemoveRandom
+      // 
+      this.buttonRemoveRandom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.buttonRemoveRandom.Location = new System.Drawing.Point(474, 27);
+      this.buttonRemoveRandom.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+      this.buttonRemoveRandom.Name = "buttonRemoveRandom";
+      this.buttonRemoveRandom.Size = new System.Drawing.Size(32, 23);
+      this.buttonRemoveRandom.TabIndex = 15;
+      this.buttonRemoveRandom.Text = "-";
+      this.buttonRemoveRandom.UseVisualStyleBackColor = true;
+      // 
       // buttonAddRandom
       // 
       this.buttonAddRandom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -127,7 +139,6 @@ namespace lab1
       this.buttonAddRandom.TabIndex = 5;
       this.buttonAddRandom.Text = "+";
       this.buttonAddRandom.UseVisualStyleBackColor = true;
-      this.buttonAddRandom.Click += new System.EventHandler(this.button2_Click_1);
       // 
       // textRandomInput
       // 
@@ -147,7 +158,6 @@ namespace lab1
       this.labelRandom.Size = new System.Drawing.Size(141, 18);
       this.labelRandom.TabIndex = 3;
       this.labelRandom.Text = "Количество узлов:";
-      this.labelRandom.Click += new System.EventHandler(this.label1_Click);
       // 
       // buttonStartRandom
       // 
@@ -159,6 +169,7 @@ namespace lab1
       this.buttonStartRandom.TabIndex = 1;
       this.buttonStartRandom.Text = "Start";
       this.buttonStartRandom.UseVisualStyleBackColor = true;
+      this.buttonStartRandom.Click += new System.EventHandler(this.buttonStartRandom_Click);
       // 
       // textRandomOutput
       // 
@@ -184,6 +195,17 @@ namespace lab1
       this.tabKeyboard.TabIndex = 2;
       this.tabKeyboard.Text = "Keyboard";
       this.tabKeyboard.UseVisualStyleBackColor = true;
+      // 
+      // buttonRemoveKeyboard
+      // 
+      this.buttonRemoveKeyboard.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.buttonRemoveKeyboard.Location = new System.Drawing.Point(474, 27);
+      this.buttonRemoveKeyboard.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+      this.buttonRemoveKeyboard.Name = "buttonRemoveKeyboard";
+      this.buttonRemoveKeyboard.Size = new System.Drawing.Size(32, 23);
+      this.buttonRemoveKeyboard.TabIndex = 15;
+      this.buttonRemoveKeyboard.Text = "-";
+      this.buttonRemoveKeyboard.UseVisualStyleBackColor = true;
       // 
       // labelKeyboard
       // 
@@ -242,7 +264,17 @@ namespace lab1
       this.tabFile.TabIndex = 3;
       this.tabFile.Text = "File";
       this.tabFile.UseVisualStyleBackColor = true;
-      this.tabFile.Click += new System.EventHandler(this.tabFile_Click);
+      // 
+      // buttonRemoveFile
+      // 
+      this.buttonRemoveFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.buttonRemoveFile.Location = new System.Drawing.Point(474, 24);
+      this.buttonRemoveFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+      this.buttonRemoveFile.Name = "buttonRemoveFile";
+      this.buttonRemoveFile.Size = new System.Drawing.Size(32, 23);
+      this.buttonRemoveFile.TabIndex = 14;
+      this.buttonRemoveFile.Text = "-";
+      this.buttonRemoveFile.UseVisualStyleBackColor = true;
       // 
       // buttonOpenFile
       // 
@@ -287,39 +319,6 @@ namespace lab1
       this.textFileOutput.Size = new System.Drawing.Size(365, 22);
       this.textFileOutput.TabIndex = 10;
       this.textFileOutput.TextChanged += new System.EventHandler(this.textFileOutput_TextChanged);
-      // 
-      // buttonRemoveFile
-      // 
-      this.buttonRemoveFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.buttonRemoveFile.Location = new System.Drawing.Point(474, 24);
-      this.buttonRemoveFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-      this.buttonRemoveFile.Name = "buttonRemoveFile";
-      this.buttonRemoveFile.Size = new System.Drawing.Size(32, 23);
-      this.buttonRemoveFile.TabIndex = 14;
-      this.buttonRemoveFile.Text = "-";
-      this.buttonRemoveFile.UseVisualStyleBackColor = true;
-      // 
-      // buttonRemoveKeyboard
-      // 
-      this.buttonRemoveKeyboard.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.buttonRemoveKeyboard.Location = new System.Drawing.Point(474, 27);
-      this.buttonRemoveKeyboard.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-      this.buttonRemoveKeyboard.Name = "buttonRemoveKeyboard";
-      this.buttonRemoveKeyboard.Size = new System.Drawing.Size(32, 23);
-      this.buttonRemoveKeyboard.TabIndex = 15;
-      this.buttonRemoveKeyboard.Text = "-";
-      this.buttonRemoveKeyboard.UseVisualStyleBackColor = true;
-      // 
-      // buttonRemoveRandom
-      // 
-      this.buttonRemoveRandom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.buttonRemoveRandom.Location = new System.Drawing.Point(474, 27);
-      this.buttonRemoveRandom.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-      this.buttonRemoveRandom.Name = "buttonRemoveRandom";
-      this.buttonRemoveRandom.Size = new System.Drawing.Size(32, 23);
-      this.buttonRemoveRandom.TabIndex = 15;
-      this.buttonRemoveRandom.Text = "-";
-      this.buttonRemoveRandom.UseVisualStyleBackColor = true;
       // 
       // Form1
       // 

@@ -28,3 +28,14 @@ C:\Users\sin2x\Desktop\lab1 — копия\lab1\obj\Release\lab1.csproj.Generate
 C:\Users\sin2x\Desktop\lab1 — копия\lab1\obj\Release\lab1.csproj.CoreCompileInputs.cache
 C:\Users\sin2x\Desktop\lab1 — копия\lab1\obj\Release\lab1.exe
 C:\Users\sin2x\Desktop\lab1 — копия\lab1\obj\Release\lab1.pdb
+C:\Users\sin2x\Desktop\lab1-1check\lab1\bin\Release\lab1.exe.config
+C:\Users\sin2x\Desktop\lab1-1check\lab1\bin\Release\lab1.exe
+C:\Users\sin2x\Desktop\lab1-1check\lab1\bin\Release\lab1.pdb
+C:\Users\sin2x\Desktop\lab1-1check\lab1\obj\Release\lab1.csproj.AssemblyReference.cache
+C:\Users\sin2x\Desktop\lab1-1check\lab1\obj\Release\lab1.Form1.resources
+C:\Users\sin2x\Desktop\lab1-1check\lab1\obj\Release\lab1.Properties.Resources.resources
+C:\Users\sin2x\Desktop\lab1-1check\lab1\obj\Release\lab1.csproj.GenerateResource.cache
+C:\Users\sin2x\Desktop\lab1-1check\lab1\obj\Release\lab1.csproj.CoreCompileInputs.cache
+C:\Users\sin2x\Desktop\lab1-1check\lab1\obj\Release\lab1.exe
+C:\Users\sin2x\Desktop\lab1-1check\lab1\obj\Release\lab1.pdb
+C:\Users\sin2x\Desktop\lab1-1check\lab1\obj\Release\lab1.Form2.resources
