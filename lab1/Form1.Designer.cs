@@ -169,7 +169,7 @@ namespace lab1
       this.buttonStartRandom.TabIndex = 1;
       this.buttonStartRandom.Text = "Start";
       this.buttonStartRandom.UseVisualStyleBackColor = true;
-      this.buttonStartRandom.Click += new System.EventHandler(this.buttonStartRandom_Click);
+
       // 
       // textRandomOutput
       // 
