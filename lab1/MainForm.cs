@@ -18,9 +18,9 @@ namespace lab1
         Keyboard,
         File
     }
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
@@ -70,62 +70,60 @@ namespace lab1
             textKeyboardInput.TextChanged += new EventHandler(activateElements);
 
 
+
+            saveBtn.MouseClick += new MouseEventHandler(showSaveMenu);
+
+        }
+
+        private void savelData(object sender, EventArgs e)
+        {
+            //OpenFileDialog FileDialog = new OpenFileDialog();
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            //FileDialog.Filter = "Text files(*.txt)|*.txt|All files(*.*)|*.*";
+
+            saveFileDialog.Filter = "Text files(*.txt)|*.txt|All files(*.*)|*.*";
+
+            if (saveFileDialog.ShowDialog() == DialogResult.Cancel)
+                return;
+            string filename = saveFileDialog.FileName;
+
+
+       
+
+            string data;
+            if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Random)
+            {
+                data = textRandomOutput.Text;
+
+            }
+            else if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Keyboard)
+            {
+                data = textKeyboardInput.Text;
+            }
+            else
+            {
+                data = textFileOutput.Text;
+            }
+            System.IO.File.WriteAllText(filename,data);
+            MessageBox.Show("Файл сохранен");
+        }
+        private void savelResults(object sender, EventArgs e)
+        {
+
+        }
+        private void showSaveMenu(object sender, MouseEventArgs e)
+        {
+                saveBtn.ContextMenu = new ContextMenu();
+                saveBtn.ContextMenu.MenuItems.Add("Save results", savelData);
+            saveBtn.ContextMenu.MenuItems.Add("Save data", savelData);
+
+            saveBtn.ContextMenu.Show(saveBtn, new Point(e.X, e.Y));
+            
         }
 
 
 
-
-
         BinaryTree tree = null;
-
-
-        /* private void sequenceTextBoxChanged(object sender, EventArgs e) {
-           string sequenceTextNewValue = sequenceTextBox.Text;
-
-
-           if (randomSwitch) {
-             for (int i = 0; i < sequenceTextNewValue.Length; i++) {
-               if ((sequenceTextNewValue.ElementAt(i) < '0' || sequenceTextNewValue.ElementAt(i) > '9')) *&& sequenceTextNewValue.ElementAt(i) != '-')
-               {//набор алфавита
-                 sequenceTextBox.Text = sequenceTextLastCorrect;
-                 return;
-               }
-             }
-             sequenceTextBox.Text = sequenceTextNewValue;
-             sequenceTextLastCorrect = sequenceTextNewValue;
-             return;
-           }
-           else {
-             for (int i = 0; i < sequenceTextNewValue.Length; i++) {
-               if (sequenceTextNewValue.Length > 0 && (sequenceTextNewValue.ElementAt(i) < '0' || sequenceTextNewValue.ElementAt(i) > '9') && sequenceTextNewValue.ElementAt(i) != ' ') 
-               {//набор алфавита
-                 sequenceTextBox.Text = sequenceTextLastCorrect;
-                 return;
-               }
-             }
-
-             while (sequenceTextNewValue.Contains("  "))
-               sequenceTextNewValue = sequenceTextNewValue.Replace("  ", " ");
-             /*while (sequenceTextNewValue.Contains("- "))
-                 sequenceTextNewValue = sequenceTextNewValue.Replace("- ", "-");
-             while (sequenceTextNewValue.Contains("--"))
-                 sequenceTextNewValue = sequenceTextNewValue.Replace("--", "-");
-             while (sequenceTextNewValue.Contains("-0"))
-                 sequenceTextNewValue = sequenceTextNewValue.Replace("-0", "0");/*
-
-
-             sequenceTextBox.Text = sequenceTextNewValue;
-             sequenceTextLastCorrect = sequenceTextNewValue;
-             return;
-             /*if (sequenceTextNewValue.ElementAt(i) == '-' && sequenceTextNewValue.ElementAt(i - 1) != ' '){
-                 sequenceTextNewValue = (new StringBuilder(sequenceTextNewValue)).insert(i, " ").toString();
-             objTextBox.Text = sequenceTextNewValue;
-             }/*
-             //return;
-           }
-
-         }*/
-
 
         private void plantTree(object sender, EventArgs e)
         {
@@ -265,7 +263,13 @@ namespace lab1
                     { //Прорисовка правого узла
                         Console.WriteLine("Right for " + node.Parent.Data + " --> " + node.Data);
 
-                        NodeForDraw nodeDraw = new NodeForDraw(node.Data.ToString(), new Point(parentLocation.X + 90, parentLocation.Y + 80), color);
+                        NodeForDraw nodeDraw;
+                        //= new NodeForDraw(node.Data.ToString(), new Point(parentLocation.X + 90, parentLocation.Y + 80), color)
+                        if (node.Parent.Parent == null)
+                            nodeDraw = new NodeForDraw(node.Data.ToString(), new Point(parentLocation.X + 140, parentLocation.Y + 80), color);
+                        else
+                            nodeDraw = new NodeForDraw(node.Data.ToString(), new Point(parentLocation.X + 90, parentLocation.Y + 80), color);
+
                         NodeForDraw.drawList.Add(nodeDraw);
 
                         if ((nodeDraw.Location.X + nodeDraw.Width) > pictureBox.Width)
@@ -549,10 +553,10 @@ namespace lab1
                   KeyboardTextBoxLastCorrect = sequenceTextNewValue;
                   return;*/
         }
-        Form2 newForm = null;
+        AddRemoveForm newForm = null;
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            newForm = new Form2();
+            newForm = new AddRemoveForm();
             newForm.Owner = this;
             //newForm.textAddNumber.Text = 
             newForm.buttonAdd.Click += new EventHandler(this.addToTree);
@@ -605,7 +609,7 @@ namespace lab1
 
         private void buttonRemove_Click(object sender, EventArgs e)
         {
-            newForm = new Form2();
+            newForm = new AddRemoveForm();
             newForm.Owner = this;
             //newForm.textAddNumber.Text = 
             newForm.Show();
@@ -702,10 +706,26 @@ namespace lab1
             drawLine();
         }
 
-
         private void pictureBox_Paint(object sender, PaintEventArgs e)
         {
             drawLine();
+        }
+        private void cleanBtn_Click(object sender, EventArgs e)
+        {
+            if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Random)
+            {
+                textRandomOutput.Text = "";
+                textRandomInput.Text = "";
+
+            }
+            else if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Keyboard)
+            {
+                 textKeyboardInput.Text = "";
+            }
+            else
+            {
+                 textFileOutput.Text = "";
+            }
         }
     }
 }

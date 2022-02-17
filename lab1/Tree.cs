@@ -106,8 +106,18 @@ namespace lab1
             //Если узел явлется корнем 
             if (me == null)
             {
+                /*BinaryTree newNode = new BinaryTree();
+                if (node.Left != null && node.Parent == null)
+                {
+                    Insert(node.Left, pictureBox, color);
+                }
 
 
+                if (node.Right != null && node.Parent == null)
+                {
+                   
+                    Inset(node.Right);
+                }*/
 
             }
 

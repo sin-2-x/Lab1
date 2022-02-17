@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace lab1 {
-  public partial class Form2 : Form {
-    public Form2() {
+  public partial class AddRemoveForm : Form {
+    public AddRemoveForm() {
       InitializeComponent();
     }
 
