@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace lab1 {
+namespace Lab1 {
   public partial class AddRemoveForm : Form {
     public AddRemoveForm() {
       InitializeComponent();

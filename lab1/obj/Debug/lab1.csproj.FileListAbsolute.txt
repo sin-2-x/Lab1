@@ -30,3 +30,14 @@ C:\Users\sin2x\Desktop\Lab1\Lab1\lab1\obj\Debug\lab1.exe
 C:\Users\sin2x\Desktop\Lab1\Lab1\lab1\obj\Debug\lab1.pdb
 C:\Users\sin2x\Desktop\Lab1\Lab1\lab1\obj\Debug\lab1.MainForm.resources
 C:\Users\sin2x\Desktop\Lab1\Lab1\lab1\obj\Debug\lab1.AddRemoveForm.resources
+C:\Users\sin2x\Desktop\laba\Lab1\lab1\bin\Debug\lab1.exe.config
+C:\Users\sin2x\Desktop\laba\Lab1\lab1\bin\Debug\lab1.exe
+C:\Users\sin2x\Desktop\laba\Lab1\lab1\bin\Debug\lab1.pdb
+C:\Users\sin2x\Desktop\laba\Lab1\lab1\obj\Debug\Lab1.csproj.AssemblyReference.cache
+C:\Users\sin2x\Desktop\laba\Lab1\lab1\obj\Debug\lab1.MainForm.resources
+C:\Users\sin2x\Desktop\laba\Lab1\lab1\obj\Debug\lab1.AddRemoveForm.resources
+C:\Users\sin2x\Desktop\laba\Lab1\lab1\obj\Debug\lab1.Properties.Resources.resources
+C:\Users\sin2x\Desktop\laba\Lab1\lab1\obj\Debug\Lab1.csproj.GenerateResource.cache
+C:\Users\sin2x\Desktop\laba\Lab1\lab1\obj\Debug\Lab1.csproj.CoreCompileInputs.cache
+C:\Users\sin2x\Desktop\laba\Lab1\lab1\obj\Debug\lab1.exe
+C:\Users\sin2x\Desktop\laba\Lab1\lab1\obj\Debug\lab1.pdb

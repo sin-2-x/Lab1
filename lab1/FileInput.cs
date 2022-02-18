@@ -1,11 +1,11 @@
-﻿using lab1.Properties;
+﻿using Lab1.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace lab1.Properties {
+namespace Lab1.Properties {
   public class FileInput : Input {
     public override int[] input(string inputStr) {
       StringBuilder oneNumInStr = new StringBuilder();    //Строка с числами для перегонки в int
