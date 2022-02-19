@@ -74,75 +74,21 @@ namespace Lab1 {
 
       //pictureBox.ControlAdded//
 
+
+
+
+
+      /////////////////////////
+      ///
+
+
     }
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-    private bool Dragging;
-    private int xPos;
-    private int yPos;
-    private void pictureBox1_MouseUp(object sender, MouseEventArgs e) { Dragging = false; }
-    private void pictureBox1_MouseDown(object sender, MouseEventArgs e) {
-      if (e.Button == MouseButtons.Left) {
-        Dragging = true;
-        xPos = e.X;
-        yPos = e.Y;
-      }
-    }
-    private void pictureBox1_MouseMove(object sender, MouseEventArgs e) {
-      Control c = sender as Control;
-      if (Dragging && c != null) {
-        c.Top = e.Y + c.Top - yPos;
-        c.Left = e.X + c.Left - xPos;
-      }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    //SAVE
     private void SavelData(object sender, EventArgs e) {
       SaveFileDialog saveFileDialog = new SaveFileDialog {
 
@@ -239,11 +185,10 @@ namespace Lab1 {
         pictureBox.Size = new Size(scrollPanel.Width, scrollPanel.Height); //set min size and hide scrolls
         ClearPictureBox();
         Print(tree, pictureBox);
-
-        //scrollPanel.Size = new Size(pictureBox.Width, pictureBox.Height);
-        //LineForDraw.drawLine(pictureBox);
-        pictureBox.Update();
-        DrawLine();
+        ClearPictureBox();
+        Print(tree, pictureBox, default, NB);
+        //pictureBox.Update();
+        //DrawLine();
       }
     }
     private void ClearPictureBox() {
@@ -253,8 +198,10 @@ namespace Lab1 {
       LineForDraw.lineList.Clear();
       Graphics gr = pictureBox.CreateGraphics();
       gr.Clear(pictureBox.BackColor);
-      //pictureBox.Update();
+      pictureBox.Update();
     }
+
+    Point NB = Point.Empty;
     public void Print(BinaryTree node, PictureBox pictureBox, Color color = default, Point a = new Point()) {
       if (node.Data != null) {
         if (node.Parent == null) {  //Все для прорисовки корня
@@ -267,7 +214,6 @@ namespace Lab1 {
 
           NodeForDraw.drawList.Add(nodeDraw);
           pictureBox.Controls.Add(nodeDraw);
-          //pictureBox.Control += new EventHandler(ClearPictureBox);
           nodeDraw.BringToFront();
         }
         else {    //Все для прорисовки узлов
@@ -289,8 +235,10 @@ namespace Lab1 {
               nodeDraw = new NodeForDraw(node.Data.ToString(), new Point(parentLocation.X - 90, parentLocation.Y + 80), color);
 
             if (nodeDraw.Location.X - nodeDraw.Width < 0) {
-              Point NB = new Point(NodeForDraw.drawList[0].Location.X + nodeDraw.Location.X + nodeDraw.Width, 0);
-              ClearPictureBox();
+              NB = new Point(NodeForDraw.drawList[0].Location.X + nodeDraw.Location.X + nodeDraw.Width, 0);
+               ClearPictureBox();
+              //NodeForDraw.drawList.Clear();//////////////////////////////////////////////////////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+              //Console.WriteLine("Расширение");
               Print(tree, pictureBox, color, NB);
               return;
             }
@@ -315,7 +263,7 @@ namespace Lab1 {
             else
               nodeDraw = new NodeForDraw(node.Data.ToString(), new Point(parentLocation.X + 90, parentLocation.Y + 80), color);
 
-            NodeForDraw.drawList.Add(nodeDraw);
+            
 
             if ((nodeDraw.Location.X + nodeDraw.Width) > pictureBox.Width) {
               pictureBox.Width = nodeDraw.Location.X + nodeDraw.Width;
@@ -325,7 +273,7 @@ namespace Lab1 {
             }
 
 
-
+            NodeForDraw.drawList.Add(nodeDraw);
             pictureBox.Controls.Add(nodeDraw);
             nodeDraw.BringToFront();
 
@@ -338,9 +286,7 @@ namespace Lab1 {
                    new Point(NodeForDraw.drawList.LastOrDefault().Location.X + NodeForDraw.drawList.LastOrDefault().Width / 2, NodeForDraw.drawList.LastOrDefault().Location.Y + NodeForDraw.drawList.LastOrDefault().Height / 2),
                    color);
 
-          //_l.Add(temp);
-          //drawLine();
-          //LineForDraw.drawLine(pictureBox);
+          
 
 
 
@@ -363,6 +309,7 @@ namespace Lab1 {
         }
       }
       //LineForDraw.drawLine(pictureBox);
+      
       DrawLine();
     }
     public void DrawLine() {
@@ -376,7 +323,15 @@ namespace Lab1 {
       }
     }
     class NodeForDraw : Label {
-      public static List<Label> drawList = new List<Label>();
+
+      public static List<Label> drawList = new List<Label>(); //Список всех узлов для отрисовки с параметрами
+
+
+
+
+
+
+      
       public NodeForDraw(string text, Point loc, Color color) {
         AutoSize = true;
         Location = loc;
@@ -385,8 +340,23 @@ namespace Lab1 {
         ForeColor = Color.White;
         Text = text;
 
+
+        this.MouseDown += new MouseEventHandler((object sender, MouseEventArgs e) => { isMouseDown = true; cursorStartinLocation = Cursor.Position; });
+        this.MouseUp += new MouseEventHandler((object sender, MouseEventArgs e) =>isMouseDown = false);
+        this.MouseMove += new MouseEventHandler(MoveNode);
+      }
+      Point cursorStartinLocation = new Point();//Не спрашивай...
+      bool isMouseDown = false;
+      void MoveNode(object sender, MouseEventArgs e) {
+        if (isMouseDown) {
+          Location = new Point(this.Location.X + (Cursor.Position.X- cursorStartinLocation.X), this.Location.Y + (Cursor.Position.Y - cursorStartinLocation.Y));
+          cursorStartinLocation = Cursor.Position;
+        }
       }
     }
+
+    
+     
     class LineForDraw {
       public Point ParentLocation;
       public Point ChaildLocation;
@@ -418,6 +388,8 @@ namespace Lab1 {
 
     private void ScrollPanel_SizeChanged(object sender, EventArgs e) {
       DrawLine();
+
+      Console.WriteLine(scrollPanel.Location);
     }
 
     private void ActivateElements(object sender, EventArgs e) {
@@ -710,6 +682,16 @@ namespace Lab1 {
       Console.WriteLine("clicc");
     }
 
+
+
+
+
+
+
+
+    /*private bool Dragging;
+    private int xPos;
+    private int yPos;
     private void pictureBox_MouseMove(object sender, MouseEventArgs e) {
       Console.WriteLine("cl");
       Control c = sender as Control;
@@ -729,7 +711,7 @@ namespace Lab1 {
 
     private void pictureBox_MouseUp(object sender, MouseEventArgs e) {
       Dragging = false;
-    }
+    }*/
   }
 }
 

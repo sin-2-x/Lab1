@@ -88,9 +88,9 @@ namespace Lab1
       this.pictureBox.TabStop = false;
       this.pictureBox.Click += new System.EventHandler(this.PictureBox_Click);
       this.pictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.PictureBox_Paint);
-      this.pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseDown);
+      /*this.pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseDown);
       this.pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseMove);
-      this.pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
+      this.pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);*/
       // 
       // tabControl
       // 
@@ -376,7 +376,7 @@ namespace Lab1
 
         #endregion
     private System.Windows.Forms.Panel scrollPanel;
-    private System.Windows.Forms.PictureBox pictureBox;
+    public System.Windows.Forms.PictureBox pictureBox;
     private System.Windows.Forms.TabControl tabControl;
     private System.Windows.Forms.TabPage tabRandom;
     private System.Windows.Forms.TabPage tabKeyboard;
