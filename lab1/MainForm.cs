@@ -80,7 +80,7 @@ namespace Lab1 {
 
       /////////////////////////
       ///
-
+      //NodeForDraw.pointListForLines.Add(new List<Point>());
 
     }
 
@@ -195,7 +195,9 @@ namespace Lab1 {
       pictureBox.Controls.Clear();
 
       NodeForDraw.drawList.Clear();
-      LineForDraw.lineList.Clear();
+      //LineForDraw.lineList.Clear();
+      NodeForDraw.nodeListForLines.Clear();
+      NodeForDraw.pointListForLines.Clear();
       Graphics gr = pictureBox.CreateGraphics();
       gr.Clear(pictureBox.BackColor);
       pictureBox.Update();
@@ -219,16 +221,18 @@ namespace Lab1 {
         else {    //Все для прорисовки узлов
 
           Point parentLocation = Point.Empty;                  //find parent location
+          NodeForDraw parentNode = new NodeForDraw();
           for (int i = 0; i < NodeForDraw.drawList.Count; i++) {
             if (NodeForDraw.drawList[i].Text == node.Parent.Data.ToString()) {
-              parentLocation = NodeForDraw.drawList[i].Location;
+              parentNode = NodeForDraw.drawList[i];
               break;
             }
           }
-
+          parentLocation = parentNode.Location;
+          NodeForDraw nodeDraw = new NodeForDraw();
           if (node.Parent.Left == node) { //Прорисовка левого узла
             Console.WriteLine("Left for " + node.Parent.Data + "  --> " + node.Data);
-            NodeForDraw nodeDraw;
+            //NodeForDraw nodeDraw;
             if (node.Parent.Parent == null)
               nodeDraw = new NodeForDraw(node.Data.ToString(), new Point(parentLocation.X - 140, parentLocation.Y + 80), color);
             else
@@ -256,7 +260,7 @@ namespace Lab1 {
           if (node.Parent.Right == node) { //Прорисовка правого узла
             Console.WriteLine("Right for " + node.Parent.Data + " --> " + node.Data);
 
-            NodeForDraw nodeDraw;
+            //NodeForDraw nodeDraw;
             //= new NodeForDraw(node.Data.ToString(), new Point(parentLocation.X + 90, parentLocation.Y + 80), color)
             if (node.Parent.Parent == null)
               nodeDraw = new NodeForDraw(node.Data.ToString(), new Point(parentLocation.X + 140, parentLocation.Y + 80), color);
@@ -281,12 +285,29 @@ namespace Lab1 {
 
 
 
-          //Добавление линий для рисования
-          new LineForDraw(new Point(parentLocation.X + NodeForDraw.drawList.LastOrDefault().Width / 2, parentLocation.Y + NodeForDraw.drawList.LastOrDefault().Height / 2),
-                   new Point(NodeForDraw.drawList.LastOrDefault().Location.X + NodeForDraw.drawList.LastOrDefault().Width / 2, NodeForDraw.drawList.LastOrDefault().Location.Y + NodeForDraw.drawList.LastOrDefault().Height / 2),
-                   color);
+          List < Point > buffLine = new List<Point>();
+          buffLine.Add(new Point(parentLocation.X + NodeForDraw.drawList.LastOrDefault().Width / 2, parentLocation.Y + NodeForDraw.drawList.LastOrDefault().Height / 2));
+          buffLine.Add(new Point(NodeForDraw.drawList.LastOrDefault().Location.X + NodeForDraw.drawList.LastOrDefault().Width / 2, NodeForDraw.drawList.LastOrDefault().Location.Y + NodeForDraw.drawList.LastOrDefault().Height / 2));
 
-          
+          NodeForDraw.pointListForLines.Add(buffLine);
+          NodeForDraw.nodeListForLines.Add(nodeDraw);
+
+          buffLine.Clear();
+          buffLine.Add(new Point(NodeForDraw.drawList.LastOrDefault().Location.X + NodeForDraw.drawList.LastOrDefault().Width / 2, NodeForDraw.drawList.LastOrDefault().Location.Y + NodeForDraw.drawList.LastOrDefault().Height / 2));
+          buffLine.Add(new Point(parentLocation.X + NodeForDraw.drawList.LastOrDefault().Width / 2, parentLocation.Y + NodeForDraw.drawList.LastOrDefault().Height / 2));
+
+          //NodeForDraw.lineList.Add(parentNode, buffLine);
+          NodeForDraw.pointListForLines.Add(buffLine);
+          NodeForDraw.nodeListForLines.Add(parentNode);
+
+          Console.WriteLine(NodeForDraw.nodeListForLines);
+
+          //Добавление линий для рисования
+          /*new LineForDraw(new Point(parentLocation.X + NodeForDraw.drawList.LastOrDefault().Width / 2, parentLocation.Y + NodeForDraw.drawList.LastOrDefault().Height / 2),
+                   new Point(NodeForDraw.drawList.LastOrDefault().Location.X + NodeForDraw.drawList.LastOrDefault().Width / 2, NodeForDraw.drawList.LastOrDefault().Location.Y + NodeForDraw.drawList.LastOrDefault().Height / 2),
+                   color);*/
+
+
 
 
 
@@ -309,29 +330,21 @@ namespace Lab1 {
         }
       }
       //LineForDraw.drawLine(pictureBox);
-      
-      DrawLine();
+
+      NodeForDraw.DrawLine(pictureBox);
     }
-    public void DrawLine() {
-      //var pictureBox = Form1.con.Controls.Find("pictureBox", true);
-      Graphics gr = pictureBox.CreateGraphics();
-      for (int i = 0; i < LineForDraw.lineList.Count; i++) {
-        gr.DrawLine(new Pen(LineForDraw.lineList[i].lineColor, 2), LineForDraw.lineList[i].ParentLocation, LineForDraw.lineList[i].ChaildLocation);
-      }
-      for (int i = 0; i < LineForDraw.lineList.Count; i++) {
-        gr.DrawLine(new Pen(LineForDraw.lineList[i].lineColor, 2), LineForDraw.lineList[i].ParentLocation, LineForDraw.lineList[i].ChaildLocation);
-      }
-    }
+    
+    
+
+    
     class NodeForDraw : Label {
+      //public static Dictionary<NodeForDraw, List<Point>> lineList = new Dictionary<NodeForDraw, List<Point>>();
 
-      public static List<Label> drawList = new List<Label>(); //Список всех узлов для отрисовки с параметрами
+      public static List<NodeForDraw> nodeListForLines = new List<NodeForDraw>();
+      public static List<List<Point>> pointListForLines = new List<List<Point>>();
+      public static List<NodeForDraw> drawList = new List<NodeForDraw>(); //Список всех узлов для отрисовки с параметрами
 
-
-
-
-
-
-      
+      public NodeForDraw() { }
       public NodeForDraw(string text, Point loc, Color color) {
         AutoSize = true;
         Location = loc;
@@ -348,16 +361,50 @@ namespace Lab1 {
       Point cursorStartinLocation = new Point();//Не спрашивай...
       bool isMouseDown = false;
       void MoveNode(object sender, MouseEventArgs e) {
+        NodeForDraw nodeToMove = (NodeForDraw)sender;
         if (isMouseDown) {
           Location = new Point(this.Location.X + (Cursor.Position.X- cursorStartinLocation.X), this.Location.Y + (Cursor.Position.Y - cursorStartinLocation.Y));
           cursorStartinLocation = Cursor.Position;
+
+          //repaint lines
+
+          for (int i = 0; i< nodeListForLines.Count;i++) {
+            if (nodeListForLines[i] == nodeToMove) {
+              
+              pointListForLines[i][0] = new Point(this.Location.X + (Cursor.Position.X - cursorStartinLocation.X), this.Location.Y + (Cursor.Position.Y - cursorStartinLocation.Y));
+              //Console.WriteLine(lineList[node][0]);
+              
+              //var pictureBox = (PictureBox)nodeToMove.Parent;
+              
+            }
+          }
+
+          DrawLine((PictureBox)nodeToMove.Parent);
+        }
+      }
+
+
+      public static void DrawLine(PictureBox pictureBox) {
+        Graphics gr = pictureBox.CreateGraphics();
+        /*for (int i = 0; i < LineForDraw.lineList.Count; i++) {
+          gr.DrawLine(new Pen(LineForDraw.lineList[i].lineColor, 2), LineForDraw.lineList[i].ParentLocation, LineForDraw.lineList[i].ChaildLocation);
+        }
+        */
+        gr.Clear(pictureBox.BackColor);
+        pictureBox.Update();
+        Console.WriteLine( "Jyj   "  +pointListForLines.Count);
+        if (pointListForLines.Count !=0) {
+          Console.WriteLine("Jyj   " + pointListForLines[0]);
+          for (int i = 0; i < pointListForLines.Count; i++) {
+            gr.DrawLine(new Pen(nodeListForLines[i].BackColor, 2), pointListForLines[i][0], pointListForLines[i][1]);
+          }
         }
       }
     }
 
     
      
-    class LineForDraw {
+    /*class LineForDraw {
       public Point ParentLocation;
       public Point ChaildLocation;
       public Color lineColor;
@@ -373,21 +420,21 @@ namespace Lab1 {
       }
 
 
-      /*public static void drawLine(PictureBox pictureBox) {
+      *//*public static void drawLine(PictureBox pictureBox) {
         //var pictureBox = Form1.con.Controls.Find("pictureBox", true);
         Graphics gr = pictureBox.CreateGraphics();
         for (int i = 0; i < lineList.Count; i++) {
           gr.DrawLine(new Pen(lineList[i].lineColor, 2), lineList[i].ParentLocation, lineList[i].ChaildLocation);
         }
         //Console.WriteLine("закончен рисование");
-      }*/
+      }*//*
     }
-
+*/
 
 
 
     private void ScrollPanel_SizeChanged(object sender, EventArgs e) {
-      DrawLine();
+      NodeForDraw.DrawLine(pictureBox);
 
       Console.WriteLine(scrollPanel.Location);
     }
@@ -566,7 +613,7 @@ namespace Lab1 {
           ClearPictureBox();
           Print(tree, pictureBox);
           pictureBox.Update();
-          DrawLine();
+          NodeForDraw.DrawLine(pictureBox);
         }
 
 
@@ -658,11 +705,11 @@ namespace Lab1 {
       ClearPictureBox();
       Print(tree, pictureBox);
       pictureBox.Update();
-      DrawLine();
+      NodeForDraw.DrawLine(pictureBox);
     }
 
     private void PictureBox_Paint(object sender, PaintEventArgs e) {
-      DrawLine();
+      NodeForDraw.DrawLine(pictureBox);
     }
     private void CleanBtn_Click(object sender, EventArgs e) {
       if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Random) {
