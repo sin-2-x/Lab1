@@ -23,9 +23,6 @@ namespace Lab1 {
 
     private void MainForm_Load(object sender, EventArgs e) {
 
-      //randomBtn.BackColor = Color.FromArgb(252, 81, 133);
-
-      // Sizes the tabs of tabControl1.
       buttonStartRandom.Click += new EventHandler(this.PlantTree);
       buttonStartKeyboard.Click += new EventHandler(this.PlantTree);
       buttonStartFile.Click += new EventHandler(this.PlantTree);
@@ -34,18 +31,9 @@ namespace Lab1 {
       buttonRemoveKeyboard.Click += new EventHandler(ButtonRemove_Click);
       buttonRemoveRandom.Click += new EventHandler(ButtonRemove_Click);
 
-
-
       buttonRemoveRandom.Enabled = false;
       buttonRemoveKeyboard.Enabled = false;
       buttonRemoveFile.Enabled = false;
-
-      //buttonStartRandom.Enabled = false;
-
-
-
-
-
 
       textRandomOutput.Enabled = false;
       textRandomOutput.ReadOnly = true;
@@ -54,7 +42,6 @@ namespace Lab1 {
 
       // Makes the tab width definable. 
       this.tabControl.SizeMode = TabSizeMode.Fixed;
-
 
       buttonAddFile.Click += new EventHandler(this.ButtonAdd_Click);
       buttonAddKeyboard.Click += new EventHandler(this.ButtonAdd_Click);
@@ -67,25 +54,7 @@ namespace Lab1 {
 
 
       saveBtn.MouseClick += new MouseEventHandler(ShowSaveMenu);
-
-
-
-
-
-      //pictureBox.ControlAdded//
-
-
-
-
-
-      /////////////////////////
-      ///
-
-
     }
-
-
-
 
 
     //SAVE
@@ -117,11 +86,53 @@ namespace Lab1 {
       MessageBox.Show("Файл сохранен");
     }
     private void SavelResults(object sender, EventArgs e) {
-
+      GeneraitSaveList(tree, 0);
+      for (int i = 0; i < saveList.Count; i++)
+        Console.WriteLine(saveList[i]);
+      saveList.Clear();
     }
+    List<StringBuilder> saveList = new List<StringBuilder>();
+    int max = 3;
+    void GeneraitSaveList(BinaryTree node, int level) {
+      if (node != null) {
+        if (saveList.Count == level) {
+
+          saveList.Add(new StringBuilder());
+          saveList[level].Append(node.Data);
+
+
+          /*if (level != 0) {
+            for (int i = level; i >= 0; i--) {
+              while () { }
+            }
+
+          }*/
+
+
+        }
+        else if (saveList.Count > level) {
+          saveList[level].Append(node.Data);
+        }
+
+        if (node.Left != null) {
+          GeneraitSaveList(node.Left, level + 1);
+        }
+        if (node.Right != null) {
+          GeneraitSaveList(node.Right, level + 1);
+        }
+
+        /*GeneraitSaveList(node.Left, level + 1);
+        for (int i = 0; i < level; i++) Console.Write("   ");
+        Console.WriteLine(node.Data);
+        GeneraitSaveList(node.Right, level + 1);*/
+
+
+      }
+    }
+
     private void ShowSaveMenu(object sender, MouseEventArgs e) {
       saveBtn.ContextMenu = new ContextMenu();
-      saveBtn.ContextMenu.MenuItems.Add("Save results", SavelData);
+      saveBtn.ContextMenu.MenuItems.Add("Save results", SavelResults);
       saveBtn.ContextMenu.MenuItems.Add("Save data", SavelData);
 
       saveBtn.ContextMenu.Show(saveBtn, new Point(e.X, e.Y));
@@ -130,7 +141,7 @@ namespace Lab1 {
 
 
 
-
+    //TREE
 
     BinaryTree tree = null;
 
@@ -184,33 +195,40 @@ namespace Lab1 {
 
         pictureBox.Size = new Size(scrollPanel.Width, scrollPanel.Height); //set min size and hide scrolls
         ClearPictureBox();
+        leftmost = Point.Empty;
         Print(tree, pictureBox);
         ClearPictureBox();
-        Print(tree, pictureBox, default, NB);
-        //pictureBox.Update();
-        //DrawLine();
+        Console.WriteLine("Чистовая");
+         
+        Print(tree, pictureBox, default, leftmost);
+        
       }
     }
-    private void ClearPictureBox() {
-      pictureBox.Controls.Clear();
+    private void RepaintTree() {
 
-      NodeForDraw.drawList.Clear();
-      LineForDraw.lineList.Clear();
-      Graphics gr = pictureBox.CreateGraphics();
-      gr.Clear(pictureBox.BackColor);
+      ClearPictureBox();
+      pictureBox.Size = scrollPanel.MinimumSize;
+
+      Print(tree, pictureBox);
       pictureBox.Update();
+      NodeForDraw.DrawLine(pictureBox);
+      
     }
 
-    Point NB = Point.Empty;
+
+    Point leftmost = Point.Empty;
+    Point rightmost = Point.Empty;
+    Point correction = new Point(40,40);
     public void Print(BinaryTree node, PictureBox pictureBox, Color color = default, Point a = new Point()) {
       if (node.Data != null) {
         if (node.Parent == null) {  //Все для прорисовки корня
           Console.WriteLine("ROOT:" + node.Data);
+          /*
+                    //if (a.IsEmpty)
+                     // a = new Point(pictureBox.Width / 2, 0);
+                    //a.X = a.X + pictureBox.Width / 2;*/
 
-          if (a.IsEmpty)
-            a = new Point(pictureBox.Width / 2, 0);
-
-          NodeForDraw nodeDraw = new NodeForDraw(node.Data.ToString(), a, Color.Green);
+          NodeForDraw nodeDraw = new NodeForDraw(node.Data.ToString(), new Point(Math.Abs(a.X) + pictureBox.Width / 2, 0), Color.FromArgb(59, 131, 189));
 
           NodeForDraw.drawList.Add(nodeDraw);
           pictureBox.Controls.Add(nodeDraw);
@@ -219,28 +237,31 @@ namespace Lab1 {
         else {    //Все для прорисовки узлов
 
           Point parentLocation = Point.Empty;                  //find parent location
+          NodeForDraw parentNode = new NodeForDraw();
           for (int i = 0; i < NodeForDraw.drawList.Count; i++) {
             if (NodeForDraw.drawList[i].Text == node.Parent.Data.ToString()) {
-              parentLocation = NodeForDraw.drawList[i].Location;
+              parentNode = NodeForDraw.drawList[i];
               break;
             }
           }
-
+          parentLocation = parentNode.Location;
+          NodeForDraw nodeDraw = new NodeForDraw();
           if (node.Parent.Left == node) { //Прорисовка левого узла
             Console.WriteLine("Left for " + node.Parent.Data + "  --> " + node.Data);
-            NodeForDraw nodeDraw;
-            if (node.Parent.Parent == null)
-              nodeDraw = new NodeForDraw(node.Data.ToString(), new Point(parentLocation.X - 140, parentLocation.Y + 80), color);
-            else
-              nodeDraw = new NodeForDraw(node.Data.ToString(), new Point(parentLocation.X - 90, parentLocation.Y + 80), color);
+            //NodeForDraw nodeDraw;
+
+            if (color == Color.FromArgb(255, 46, 99)) {
+            
+            }
+
+            
+              nodeDraw = new NodeForDraw(node.Data.ToString(), new Point(parentLocation.X - correction.X, parentLocation.Y + +20+correction.Y), color);
 
             if (nodeDraw.Location.X - nodeDraw.Width < 0) {
-              NB = new Point(NodeForDraw.drawList[0].Location.X + nodeDraw.Location.X + nodeDraw.Width, 0);
-               ClearPictureBox();
-              //NodeForDraw.drawList.Clear();//////////////////////////////////////////////////////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-              //Console.WriteLine("Расширение");
-              Print(tree, pictureBox, color, NB);
-              return;
+              if (nodeDraw.Location.X - nodeDraw.Width < leftmost.X)
+                leftmost = new Point(Math.Abs(nodeDraw.Location.X - nodeDraw.Width), 0);
+
+             
             }
 
             if ((nodeDraw.Location.Y + nodeDraw.Height) > pictureBox.Height) {
@@ -256,14 +277,10 @@ namespace Lab1 {
           if (node.Parent.Right == node) { //Прорисовка правого узла
             Console.WriteLine("Right for " + node.Parent.Data + " --> " + node.Data);
 
-            NodeForDraw nodeDraw;
-            //= new NodeForDraw(node.Data.ToString(), new Point(parentLocation.X + 90, parentLocation.Y + 80), color)
-            if (node.Parent.Parent == null)
-              nodeDraw = new NodeForDraw(node.Data.ToString(), new Point(parentLocation.X + 140, parentLocation.Y + 80), color);
-            else
-              nodeDraw = new NodeForDraw(node.Data.ToString(), new Point(parentLocation.X + 90, parentLocation.Y + 80), color);
-
             
+              nodeDraw = new NodeForDraw(node.Data.ToString(), new Point(parentLocation.X + correction.X, parentLocation.Y + 20+correction.Y), color);
+
+
 
             if ((nodeDraw.Location.X + nodeDraw.Width) > pictureBox.Width) {
               pictureBox.Width = nodeDraw.Location.X + nodeDraw.Width;
@@ -279,20 +296,19 @@ namespace Lab1 {
 
           }
 
+          correction.X += 40;
+          correction.Y += 40;
+          List<NodeForDraw> buffLine = new List<NodeForDraw>();
+          buffLine.Add(parentNode);
+          buffLine.Add(nodeDraw);
 
-
-          //Добавление линий для рисования
-          new LineForDraw(new Point(parentLocation.X + NodeForDraw.drawList.LastOrDefault().Width / 2, parentLocation.Y + NodeForDraw.drawList.LastOrDefault().Height / 2),
-                   new Point(NodeForDraw.drawList.LastOrDefault().Location.X + NodeForDraw.drawList.LastOrDefault().Width / 2, NodeForDraw.drawList.LastOrDefault().Location.Y + NodeForDraw.drawList.LastOrDefault().Height / 2),
-                   color);
-
-          
-
+          //NodeForDraw.pointListForLines.Add(buffLine);
+          NodeForDraw.nodeListForLines.Add(buffLine);
 
 
         }
         if (node.Left != null && node.Parent == null) {
-          color = Color.Red;
+          color = Color.FromArgb(255, 46, 99);
           Print(node.Left, pictureBox, color);
         }
         else if (node.Left != null) {
@@ -301,7 +317,7 @@ namespace Lab1 {
 
 
         if (node.Right != null && node.Parent == null) {
-          color = Color.Black;
+          color = Color.FromArgb(37, 42, 52);
           Print(node.Right, pictureBox, color);
         }
         else if (node.Right != null) {
@@ -309,29 +325,73 @@ namespace Lab1 {
         }
       }
       //LineForDraw.drawLine(pictureBox);
-      
-      DrawLine();
+
+      NodeForDraw.DrawLine(pictureBox);
+      correction = new Point(30, 30);
     }
-    public void DrawLine() {
-      //var pictureBox = Form1.con.Controls.Find("pictureBox", true);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private void ClearPictureBox() {
+      pictureBox.Controls.Clear();
+
+      NodeForDraw.drawList.Clear();
+      NodeForDraw.nodeListForLines.Clear();
       Graphics gr = pictureBox.CreateGraphics();
-      for (int i = 0; i < LineForDraw.lineList.Count; i++) {
-        gr.DrawLine(new Pen(LineForDraw.lineList[i].lineColor, 2), LineForDraw.lineList[i].ParentLocation, LineForDraw.lineList[i].ChaildLocation);
-      }
-      for (int i = 0; i < LineForDraw.lineList.Count; i++) {
-        gr.DrawLine(new Pen(LineForDraw.lineList[i].lineColor, 2), LineForDraw.lineList[i].ParentLocation, LineForDraw.lineList[i].ChaildLocation);
-      }
+      gr.Clear(pictureBox.BackColor);
+      pictureBox.Update();
     }
     class NodeForDraw : Label {
 
-      public static List<Label> drawList = new List<Label>(); //Список всех узлов для отрисовки с параметрами
+      public static List<List<NodeForDraw>> nodeListForLines = new List<List<NodeForDraw>>();
+      public static List<NodeForDraw> drawList = new List<NodeForDraw>(); //Список всех узлов для отрисовки с параметрами
 
-
-
-
-
-
-      
+      public NodeForDraw() { }
       public NodeForDraw(string text, Point loc, Color color) {
         AutoSize = true;
         Location = loc;
@@ -342,56 +402,91 @@ namespace Lab1 {
 
 
         this.MouseDown += new MouseEventHandler((object sender, MouseEventArgs e) => { isMouseDown = true; cursorStartinLocation = Cursor.Position; });
-        this.MouseUp += new MouseEventHandler((object sender, MouseEventArgs e) =>isMouseDown = false);
+        this.MouseUp += new MouseEventHandler((object sender, MouseEventArgs e) => isMouseDown = false);
         this.MouseMove += new MouseEventHandler(MoveNode);
       }
       Point cursorStartinLocation = new Point();//Не спрашивай...
       bool isMouseDown = false;
       void MoveNode(object sender, MouseEventArgs e) {
+        NodeForDraw nodeToMove = (NodeForDraw)sender;
         if (isMouseDown) {
-          Location = new Point(this.Location.X + (Cursor.Position.X- cursorStartinLocation.X), this.Location.Y + (Cursor.Position.Y - cursorStartinLocation.Y));
+          Location = new Point(this.Location.X + (Cursor.Position.X - cursorStartinLocation.X), this.Location.Y + (Cursor.Position.Y - cursorStartinLocation.Y));
           cursorStartinLocation = Cursor.Position;
+
+          //repaint lines
+
+          for (int i = 0; i < nodeListForLines.Count; i++) {
+            List<NodeForDraw> linesToMove = new List<NodeForDraw>();
+            if (nodeListForLines[i][0] == nodeToMove) {
+
+              nodeListForLines[i][0].Location = new Point(this.Location.X + (Cursor.Position.X - cursorStartinLocation.X), this.Location.Y + (Cursor.Position.Y - cursorStartinLocation.Y));
+              //DrawLine((PictureBox)nodeToMove.Parent, nodeListForLines[i]);
+              DrawLine((PictureBox)nodeToMove.Parent);
+            }
+          }
+
+          // DrawLine((PictureBox)nodeToMove.Parent);
         }
       }
-    }
-
-    
-     
-    class LineForDraw {
-      public Point ParentLocation;
-      public Point ChaildLocation;
-      public Color lineColor;
-      public static List<LineForDraw> lineList = new List<LineForDraw>();
-      public LineForDraw(Point ParentLocation, Point ChaildLocation, Color lineColor) {
 
 
-        this.ParentLocation = ParentLocation;
-        this.ChaildLocation = ChaildLocation;
-        this.lineColor = lineColor;
-        lineList.Add(this);
-
-      }
-
-
-      /*public static void drawLine(PictureBox pictureBox) {
-        //var pictureBox = Form1.con.Controls.Find("pictureBox", true);
+      public static void DrawLine(PictureBox pictureBox) {
         Graphics gr = pictureBox.CreateGraphics();
-        for (int i = 0; i < lineList.Count; i++) {
-          gr.DrawLine(new Pen(lineList[i].lineColor, 2), lineList[i].ParentLocation, lineList[i].ChaildLocation);
+
+        gr.Clear(pictureBox.BackColor);
+        pictureBox.Update();
+        if (nodeListForLines.Count != 0) {
+          for (int i = 0; i < nodeListForLines.Count; i++) {
+            gr.DrawLine(new Pen(nodeListForLines[i][0].BackColor, 2), new Point(nodeListForLines[i][0].Location.X + nodeListForLines[i][0].Width / 2, nodeListForLines[i][0].Location.Y + nodeListForLines[i][0].Height / 2), new Point(nodeListForLines[i][1].Location.X + nodeListForLines[i][1].Width / 2, nodeListForLines[i][1].Location.Y + nodeListForLines[i][1].Height / 2));
+          }
         }
-        //Console.WriteLine("закончен рисование");
+      }
+
+    /*  public static void DrawLine(PictureBox pictureBox, List<NodeForDraw> MoveNode) {
+        Graphics gr = pictureBox.CreateGraphics();
+
+        //gr.Clear(pictureBox.BackColor);
+        //pictureBox.Update();
+        //if (nodeListForLines.Count != 0) {
+        //for (int i = 0; i < nodeListForLines.Count; i++) {
+        gr.DrawLine(new Pen(MoveNode[0].BackColor, 2), MoveNode[0].Location, MoveNode[1].Location);
+        //}
+        //}
       }*/
+
+
+
     }
 
 
 
 
+    //WINFORMS
     private void ScrollPanel_SizeChanged(object sender, EventArgs e) {
-      DrawLine();
+      pictureBox.MinimumSize = scrollPanel.Size;
+      NodeForDraw.DrawLine(pictureBox);
 
-      Console.WriteLine(scrollPanel.Location);
+    }
+    private void PictureBox_Paint(object sender, PaintEventArgs e) {
+      NodeForDraw.DrawLine(pictureBox);
+    }
+    private void CleanBtn_Click(object sender, EventArgs e) {
+      if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Random) {
+        textRandomOutput.Text = "";
+        textRandomInput.Text = "";
+
+      }
+      else if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Keyboard) {
+        textKeyboardInput.Text = "";
+      }
+      else {
+        textFileOutput.Text = "";
+      }
     }
 
+    private void PictureBox_Click(object sender, EventArgs e) {
+      Console.WriteLine("clicc");
+    }
     private void ActivateElements(object sender, EventArgs e) {
 
       if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Random) {
@@ -429,43 +524,6 @@ namespace Lab1 {
 
 
     }
-
-    string RandomTextBoxLastCorrect = "";
-    private void TextRandomInput_TextChanged(object sender, EventArgs e) {
-      string sequenceTextNewValue = textRandomInput.Text;
-      for (int i = 0; i < sequenceTextNewValue.Length; i++) {
-        if ((sequenceTextNewValue.ElementAt(i) < '0' || sequenceTextNewValue.ElementAt(i) > '9')) {//набор алфавита
-          textRandomInput.Text = RandomTextBoxLastCorrect;
-          return;
-        }
-      }
-      textRandomInput.Text = sequenceTextNewValue;
-      RandomTextBoxLastCorrect = sequenceTextNewValue;
-      return;
-
-    }
-    string KeyboardTextBoxLastCorrect;
-    private void TextKeyboardInput_TextChanged(object sender, EventArgs e) {
-      string sequenceTextNewValue = textKeyboardInput.Text;
-      if (sequenceTextNewValue.Length > 0) {
-        for (int i = 0; i < sequenceTextNewValue.Length; i++) {
-          if (sequenceTextNewValue.Length > 0 && (sequenceTextNewValue.ElementAt(i) < '0' || sequenceTextNewValue.ElementAt(i) > '9') && sequenceTextNewValue.ElementAt(i) != ' ') {//набор алфавита
-            textKeyboardInput.Text = KeyboardTextBoxLastCorrect;
-            return;
-          }
-        }
-
-        while (sequenceTextNewValue.Contains("  "))
-          sequenceTextNewValue = sequenceTextNewValue.Replace("  ", " ");
-        if (sequenceTextNewValue.ElementAt(0) == ' ') {
-          sequenceTextNewValue = sequenceTextNewValue.Remove(0, 1);
-        }
-
-        textKeyboardInput.Text = sequenceTextNewValue;
-        KeyboardTextBoxLastCorrect = sequenceTextNewValue;
-        return;
-      }
-    }
     private void TabControl_SelectedIndexChanged(object sender, EventArgs e) {
       /*RandomTextBoxLastCorrect = "";
       textRandomInput.Text = "";
@@ -484,50 +542,11 @@ namespace Lab1 {
       tree = null;*/
 
     }
-    //string FileTextBoxLastCorrect = "";
-    private void ButtonOpenFile_Click(object sender, EventArgs e) {
-      OpenFileDialog openFileDialog = new OpenFileDialog {
-        Filter = "Text files(*.txt)|*.txt|All files(*.*)|*.*"
-      };
-      if (openFileDialog.ShowDialog() == DialogResult.Cancel)
-        return;
 
-      string sequenceTextNewValue = System.IO.File.ReadAllText(openFileDialog.FileName);
 
-      for (int i = 0; i < sequenceTextNewValue.Length; i++) {
-        if (sequenceTextNewValue.Length > 0 && (sequenceTextNewValue.ElementAt(i) < '0' || sequenceTextNewValue.ElementAt(i) > '9') && sequenceTextNewValue.ElementAt(i) != ' ') {//набор алфавита
-          textFileOutput.Text = "";
-          MessageBox.Show("Ошибка: Неверный формат записи файла");
-          return;
-        }
-      }
 
-      while (sequenceTextNewValue.Contains("  "))
-        sequenceTextNewValue = sequenceTextNewValue.Replace("  ", " ");
 
-      textFileOutput.Text = sequenceTextNewValue;
-      textFileOutput.Enabled = true;
-      return;
-
-    }
-
-    private void TextFileOutput_TextChanged(object sender, EventArgs e) {
-      /*      string sequenceTextNewValue = textFileOutput.Text;
-            for (int i = 0; i < sequenceTextNewValue.Length; i++) {
-              if (sequenceTextNewValue.Length > 0 && (sequenceTextNewValue.ElementAt(i) < '0' || sequenceTextNewValue.ElementAt(i) > '9') && sequenceTextNewValue.ElementAt(i) != ' ') {//набор алфавита
-                textFileOutput.Text = "";
-                MessageBox.Show("Ошибка: Неверный формат записи файла");
-                return;
-              }
-            }
-
-            while (sequenceTextNewValue.Contains("  "))
-              sequenceTextNewValue = sequenceTextNewValue.Replace("  ", " ");
-
-            textKeyboardInput.Text = sequenceTextNewValue;
-            KeyboardTextBoxLastCorrect = sequenceTextNewValue;
-            return;*/
-    }
+    //ADD/REMOVE
     AddRemoveForm newForm = null;
     private void ButtonAdd_Click(object sender, EventArgs e) {
       newForm = new AddRemoveForm {
@@ -565,8 +584,8 @@ namespace Lab1 {
           tree.Insert(newNode);
           ClearPictureBox();
           Print(tree, pictureBox);
-          pictureBox.Update();
-          DrawLine();
+          //pictureBox.Update();
+          //NodeForDraw.DrawLine(pictureBox);
         }
 
 
@@ -601,8 +620,6 @@ namespace Lab1 {
 
         if (!(tree is null) && tree.Find(newNode) != null) {
           if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Random) {
-            //if (textRandomOutput.Text.Length > 0)
-            //{
             if (textRandomOutput.Text.IndexOf(" " + newForm.textAddNumber.Text + " ") != -1) {
               textRandomOutput.Text = textRandomOutput.Text.Replace(" " + newForm.textAddNumber.Text + " ", " "); // убираем из поля вывода
               if (textRandomInput.Text.Length > 0)
@@ -618,8 +635,6 @@ namespace Lab1 {
           }
           else if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Keyboard) {
 
-            //  if (textKeyboardInput.Text.Length > 0)
-            //  {
             if (textKeyboardInput.Text.IndexOf(" " + newForm.textAddNumber.Text) != -1) {
               textKeyboardInput.Text = textKeyboardInput.Text.Replace(" " + newForm.textAddNumber.Text, ""); // убираем из поля вывода
               tree.Remove(newNode);
@@ -653,34 +668,90 @@ namespace Lab1 {
 
       newForm.Close();
     }
-    private void RepaintTree() {
 
-      ClearPictureBox();
-      Print(tree, pictureBox);
-      pictureBox.Update();
-      DrawLine();
-    }
 
-    private void PictureBox_Paint(object sender, PaintEventArgs e) {
-      DrawLine();
-    }
-    private void CleanBtn_Click(object sender, EventArgs e) {
-      if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Random) {
-        textRandomOutput.Text = "";
-        textRandomInput.Text = "";
 
+
+    //INPUT
+    string KeyboardTextBoxLastCorrect;
+    private void TextKeyboardInput_TextChanged(object sender, EventArgs e) {
+      string sequenceTextNewValue = textKeyboardInput.Text;
+      if (sequenceTextNewValue.Length > 0) {
+        for (int i = 0; i < sequenceTextNewValue.Length; i++) {
+          if (sequenceTextNewValue.Length > 0 && (sequenceTextNewValue.ElementAt(i) < '0' || sequenceTextNewValue.ElementAt(i) > '9') && sequenceTextNewValue.ElementAt(i) != ' ') {//набор алфавита
+            textKeyboardInput.Text = KeyboardTextBoxLastCorrect;
+            return;
+          }
+        }
+
+        while (sequenceTextNewValue.Contains("  "))
+          sequenceTextNewValue = sequenceTextNewValue.Replace("  ", " ");
+        if (sequenceTextNewValue.ElementAt(0) == ' ') {
+          sequenceTextNewValue = sequenceTextNewValue.Remove(0, 1);
+        }
+
+        textKeyboardInput.Text = sequenceTextNewValue;
+        KeyboardTextBoxLastCorrect = sequenceTextNewValue;
+        return;
       }
-      else if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Keyboard) {
-        textKeyboardInput.Text = "";
+    }
+    private void TextFileOutput_TextChanged(object sender, EventArgs e) {
+      /*      string sequenceTextNewValue = textFileOutput.Text;
+            for (int i = 0; i < sequenceTextNewValue.Length; i++) {
+              if (sequenceTextNewValue.Length > 0 && (sequenceTextNewValue.ElementAt(i) < '0' || sequenceTextNewValue.ElementAt(i) > '9') && sequenceTextNewValue.ElementAt(i) != ' ') {//набор алфавита
+                textFileOutput.Text = "";
+                MessageBox.Show("Ошибка: Неверный формат записи файла");
+                return;
+              }
+            }
+
+            while (sequenceTextNewValue.Contains("  "))
+              sequenceTextNewValue = sequenceTextNewValue.Replace("  ", " ");
+
+            textKeyboardInput.Text = sequenceTextNewValue;
+            KeyboardTextBoxLastCorrect = sequenceTextNewValue;
+            return;*/
+    }
+    private void ButtonOpenFile_Click(object sender, EventArgs e) {
+      OpenFileDialog openFileDialog = new OpenFileDialog {
+        Filter = "Text files(*.txt)|*.txt|All files(*.*)|*.*"
+      };
+      if (openFileDialog.ShowDialog() == DialogResult.Cancel)
+        return;
+
+      string sequenceTextNewValue = System.IO.File.ReadAllText(openFileDialog.FileName);
+
+      for (int i = 0; i < sequenceTextNewValue.Length; i++) {
+        if (sequenceTextNewValue.Length > 0 && (sequenceTextNewValue.ElementAt(i) < '0' || sequenceTextNewValue.ElementAt(i) > '9') && sequenceTextNewValue.ElementAt(i) != ' ') {//набор алфавита
+          textFileOutput.Text = "";
+          MessageBox.Show("Ошибка: Неверный формат записи файла");
+          return;
+        }
       }
-      else {
-        textFileOutput.Text = "";
+
+      while (sequenceTextNewValue.Contains("  "))
+        sequenceTextNewValue = sequenceTextNewValue.Replace("  ", " ");
+
+      textFileOutput.Text = sequenceTextNewValue;
+      textFileOutput.Enabled = true;
+      return;
+
+    }
+    string RandomTextBoxLastCorrect = "";
+    private void TextRandomInput_TextChanged(object sender, EventArgs e) {
+      string sequenceTextNewValue = textRandomInput.Text;
+      for (int i = 0; i < sequenceTextNewValue.Length; i++) {
+        if ((sequenceTextNewValue.ElementAt(i) < '0' || sequenceTextNewValue.ElementAt(i) > '9')) {//набор алфавита
+          textRandomInput.Text = RandomTextBoxLastCorrect;
+          return;
+        }
       }
+      textRandomInput.Text = sequenceTextNewValue;
+      RandomTextBoxLastCorrect = sequenceTextNewValue;
+      return;
+
     }
 
-    private void PictureBox_Click(object sender, EventArgs e) {
-      Console.WriteLine("clicc");
-    }
 
 
 
@@ -689,7 +760,19 @@ namespace Lab1 {
 
 
 
-    /*private bool Dragging;
+
+
+
+
+
+
+
+
+
+
+
+
+    private bool Dragging;
     private int xPos;
     private int yPos;
     private void pictureBox_MouseMove(object sender, MouseEventArgs e) {
@@ -711,7 +794,7 @@ namespace Lab1 {
 
     private void pictureBox_MouseUp(object sender, MouseEventArgs e) {
       Dragging = false;
-    }*/
+    }
   }
 }
 

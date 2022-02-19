@@ -78,7 +78,7 @@ namespace Lab1
       // 
       // pictureBox
       // 
-      this.pictureBox.BackColor = System.Drawing.SystemColors.Highlight;
+      this.pictureBox.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
       this.pictureBox.Location = new System.Drawing.Point(0, 0);
       this.pictureBox.Margin = new System.Windows.Forms.Padding(0);
       this.pictureBox.Name = "pictureBox";
@@ -88,9 +88,9 @@ namespace Lab1
       this.pictureBox.TabStop = false;
       this.pictureBox.Click += new System.EventHandler(this.PictureBox_Click);
       this.pictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.PictureBox_Paint);
-      /*this.pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseDown);
+      this.pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseDown);
       this.pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseMove);
-      this.pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);*/
+      this.pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
       // 
       // tabControl
       // 
