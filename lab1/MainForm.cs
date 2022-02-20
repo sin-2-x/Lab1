@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Configuration;
 
 namespace Lab1
 {
@@ -59,6 +60,7 @@ namespace Lab1
 
 
             saveBtn.MouseClick += new MouseEventHandler(ShowSaveMenu);
+            settingsBtn.MouseClick += new MouseEventHandler(ShowSettingsMenu);
         }
 
 
@@ -97,30 +99,30 @@ namespace Lab1
         }
         private void SavelResults(object sender, EventArgs e)
         {
-            GeneraitSaveList(tree, 0);
+            /*GeneraitSaveList(tree, 0);
             for (int i = 0; i < saveList.Count; i++)
                 Console.WriteLine(saveList[i]);
-            saveList.Clear();
+            saveList.Clear();*/
         }
-        List<StringBuilder> saveList = new List<StringBuilder>();
-        int max = 3;
+        //List<StringBuilder> saveList = new List<StringBuilder>();
+
         void GeneraitSaveList(BinaryTree node, int level)
         {
             if (node != null)
             {
-                if (saveList.Count == level)
+                /*if (saveList.Count == level)
                 {
 
                     saveList.Add(new StringBuilder());
                     saveList[level].Append(node.Data);
 
 
-                    /*if (level != 0) {
+                    *//*if (level != 0) {
                       for (int i = level; i >= 0; i--) {
                         while () { }
                       }
 
-                    }*/
+                    }*//*
 
 
                 }
@@ -137,7 +139,7 @@ namespace Lab1
                 {
                     GeneraitSaveList(node.Right, level + 1);
                 }
-
+*/
                 /*GeneraitSaveList(node.Left, level + 1);
                 for (int i = 0; i < level; i++) Console.Write("   ");
                 Console.WriteLine(node.Data);
@@ -157,6 +159,22 @@ namespace Lab1
 
         }
 
+        //SETTINGS
+        private void ShowSettingsMenu(object sender, MouseEventArgs e)
+        {
+            settingsBtn.ContextMenu = new ContextMenu();
+            settingsBtn.ContextMenu.MenuItems.Add("Show greeting", ShowGreetingChange);
+            //settingsBtn.ContextMenu.MenuItems[0].Checked = bool.Parse(ConfigurationManager.AppSettings["Setting1"]);
+            //settingsBtn.ContextMenu.MenuItems.Add("Save data", SavelData);
+
+            settingsBtn.ContextMenu.Show(settingsBtn, new Point(e.X, e.Y));
+
+        }
+
+        private void ShowGreetingChange(object sender, EventArgs e)
+        {
+
+        }
 
 
         //TREE
@@ -574,7 +592,7 @@ namespace Lab1
         AddRemoveForm addRemoveForm = null;
         private void ButtonAdd_Click(object sender, EventArgs e)
         {
-            addRemoveForm = new AddRemoveForm(this.Left+this.Width/2, this.Top + this.Height / 2);
+            addRemoveForm = new AddRemoveForm(this.Left + this.Width / 2, this.Top + this.Height / 2);
             addRemoveForm.buttonAdd.Click += new EventHandler(this.AddToTree);
             addRemoveForm.ShowDialog();
 
@@ -605,21 +623,16 @@ namespace Lab1
                         textFileOutput.Text += " " + addRemoveForm.textAddNumber.Text + " ";
                         //newNode = int.Parse(newForm.textAddNumber.Text);
                     }
-
-                    ///////////////
                     if (tree == null)
                         tree = new BinaryTree();
                     tree.Insert(newNode);
                     ClearPictureBox();
                     Print(tree, pictureBox);
-                    //pictureBox.Update();
-                    //NodeForDraw.DrawLine(pictureBox);
                 }
                 else
                 {
                     lab1.MessageForm mes = new lab1.MessageForm(Left + Width / 2, Top + Height / 2, "Элемент уже введен.");
                     mes.ShowDialog();
-
                 }
 
 
@@ -641,7 +654,7 @@ namespace Lab1
             {
                 int newNode = int.Parse(addRemoveForm.textAddNumber.Text);
 
-                if (!(tree is null) && tree.Find(newNode) != null && tree.Data!= newNode)
+                if (!(tree is null) && tree.Find(newNode) != null && tree.Data != newNode)
                 {
                     if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Random)
                     {
@@ -654,7 +667,7 @@ namespace Lab1
                             RepaintTree();
                         }
 
-                        
+
                     }
                     else if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Keyboard)
                     {
@@ -667,7 +680,7 @@ namespace Lab1
 
                         }
 
-                        
+
                     }
                     else
                     {
@@ -679,8 +692,9 @@ namespace Lab1
                         }
                     }
                 }
-                else {
-                    lab1.MessageForm mes = new lab1.MessageForm(Left + Width / 2, Top + Height / 2,"Элемент не найден.");
+                else
+                {
+                    lab1.MessageForm mes = new lab1.MessageForm(Left + Width / 2, Top + Height / 2, "Элемент не найден.");
                     mes.ShowDialog();
                 }
 

@@ -37,7 +37,7 @@ namespace Lab1 {
             this.addLabel.TabIndex = 0;
             this.addLabel.Text = "Enter a number:";
             this.addLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.addLabel.Click += new System.EventHandler(this.label1_Click);
+            //this.addLabel.Click += new System.EventHandler(this.label1_Click);
             // 
             // buttonAdd
             // 
@@ -48,7 +48,7 @@ namespace Lab1 {
             this.buttonAdd.TabIndex = 1;
             this.buttonAdd.Text = "Ок";
             this.buttonAdd.UseVisualStyleBackColor = true;
-            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
+            //this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
             // textAddNumber
             // 
@@ -78,7 +78,7 @@ namespace Lab1 {
             this.Name = "AddRemoveForm";
             this.ShowIcon = false;
             this.Text = "Редактирование дерева";
-            this.Load += new System.EventHandler(this.AddRemoveForm_Load);
+            //this.Load += new System.EventHandler(this.AddRemoveForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -19,13 +19,6 @@ namespace Lab1 {
 
         }
 
-    private void buttonAdd_Click(object sender, EventArgs e) {
-      
-    }
-
-
-
-
     string RandomTextBoxLastCorrect = "";
     private void textAddNumber_TextChanged(object sender, EventArgs e) {
       string sequenceTextNewValue = textAddNumber.Text;
@@ -40,13 +33,6 @@ namespace Lab1 {
       return;
     }
 
-    private void label1_Click(object sender, EventArgs e) {
 
-    }
-
-        private void AddRemoveForm_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }
