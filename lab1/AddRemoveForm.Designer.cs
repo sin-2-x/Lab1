@@ -42,7 +42,7 @@ namespace Lab1 {
             // buttonAdd
             // 
             this.buttonAdd.Location = new System.Drawing.Point(173, 97);
-            this.buttonAdd.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonAdd.Margin = new System.Windows.Forms.Padding(2);
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(56, 30);
             this.buttonAdd.TabIndex = 1;
@@ -57,13 +57,13 @@ namespace Lab1 {
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textAddNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textAddNumber.Location = new System.Drawing.Point(39, 97);
-            this.textAddNumber.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textAddNumber.Margin = new System.Windows.Forms.Padding(2);
             this.textAddNumber.Name = "textAddNumber";
             this.textAddNumber.Size = new System.Drawing.Size(130, 30);
             this.textAddNumber.TabIndex = 2;
             this.textAddNumber.TextChanged += new System.EventHandler(this.textAddNumber_TextChanged);
             // 
-            // Form2
+            // AddRemoveForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -72,12 +72,13 @@ namespace Lab1 {
             this.Controls.Add(this.buttonAdd);
             this.Controls.Add(this.addLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "Form2";
+            this.Name = "AddRemoveForm";
             this.ShowIcon = false;
             this.Text = "Редактирование дерева";
+            this.Load += new System.EventHandler(this.AddRemoveForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

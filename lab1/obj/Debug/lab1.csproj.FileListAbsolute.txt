@@ -74,3 +74,4 @@ C:\Users\sin2x\Desktop\Lab1 — копия\lab1\obj\Debug\Lab1.csproj.GenerateRe
 C:\Users\sin2x\Desktop\Lab1 — копия\lab1\obj\Debug\Lab1.csproj.CoreCompileInputs.cache
 C:\Users\sin2x\Desktop\Lab1 — копия\lab1\obj\Debug\lab1.exe
 C:\Users\sin2x\Desktop\Lab1 — копия\lab1\obj\Debug\lab1.pdb
+C:\Users\sin2x\Desktop\Lab1\Lab1\lab1\obj\Debug\lab1.MessageForm.resources

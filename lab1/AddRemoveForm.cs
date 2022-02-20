@@ -10,9 +10,14 @@ using System.Windows.Forms;
 
 namespace Lab1 {
   public partial class AddRemoveForm : Form {
-    public AddRemoveForm() {
-      InitializeComponent();
-    }
+    public AddRemoveForm(int left, int top) {
+            InitializeComponent();
+            this.StartPosition = FormStartPosition.Manual;
+            this.Location = new Point(left-Width/2, top-Height/2);
+
+
+
+        }
 
     private void buttonAdd_Click(object sender, EventArgs e) {
       
@@ -38,5 +43,10 @@ namespace Lab1 {
     private void label1_Click(object sender, EventArgs e) {
 
     }
-  }
+
+        private void AddRemoveForm_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
 }
