@@ -371,7 +371,7 @@ namespace Lab1 {
       this.Name = "MainForm";
       this.Text = "Простое бинарное дерево";
       this.Load += new System.EventHandler(this.MainForm_Load);
-     // this.Shown += new System.EventHandler(this.ShowGreeting);
+      this.Shown += new System.EventHandler(this.ShowGreeting);
       this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
       this.scrollPanel.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();

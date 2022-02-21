@@ -49,23 +49,26 @@ namespace Lab1 {
       buttonAddKeyboard.Click += new EventHandler(this.ButtonAdd_Click);
       buttonAddRandom.Click += new EventHandler(this.ButtonAdd_Click);
 
-      textFileOutput.TextChanged += new EventHandler(ActivateElements);
+      /*textFileOutput.TextChanged += new EventHandler(ActivateElements);
       textRandomOutput.TextChanged += new EventHandler(ActivateElements);
-      textKeyboardInput.TextChanged += new EventHandler(ActivateElements);
+      textKeyboardInput.TextChanged += new EventHandler(ActivateElements);*/
+      buttonStartRandom.Click += new EventHandler(this.ActivateElements);
+      buttonStartKeyboard.Click += new EventHandler(this.ActivateElements);
+      buttonStartFile.Click += new EventHandler(this.ActivateElements);
 
 
 
       saveBtn.MouseClick += new MouseEventHandler(ShowSaveMenu);
-     // settingsBtn.MouseClick += new MouseEventHandler(ShowSettingsMenu);
+      settingsBtn.MouseClick += new MouseEventHandler(ShowSettingsMenu);
       
     }
-    /*private void ShowGreeting(object sender, EventArgs e) {
+    private void ShowGreeting(object sender, EventArgs e) {
       if (bool.Parse(ConfigurationManager.AppSettings["showGreeting"])) {
-        lab1.MessageForm mes = new lab1.MessageForm(Left + Width / 2, Top + Height / 2, 
+        lab1.MessageForm mes = new lab1.MessageForm(Left + Width / 2, Top + Height / 2,
           "Студент СПБГТИ(ТУ) \nСтарков Силантий Денисович \n403 группа\n Контрольная работа №2\n Вариант №24");
         mes.ShowDialog();
       }
-    }*/
+    }
 
 
     //SAVE
@@ -97,59 +100,105 @@ namespace Lab1 {
       MessageBox.Show("Файл сохранен");
     }
     private void SavelResults(object sender, EventArgs e) {
-      GeneraitSaveList(tree, 0);
+      GeneraitSaveList(tree, 0, true);
       for (int i = 0; i < saveList.Count; i++)
         Console.WriteLine(saveList[i]);
       saveList.Clear();
     }
     List<StringBuilder> saveList = new List<StringBuilder>();
 
-    void GeneraitSaveList(BinaryTree node, int level) {
+    void GeneraitSaveList(BinaryTree node, int level, bool isLeft) {
       if (node != null) {
-        /*if (saveList.Count == level) {
+        if (saveList.Count == level) {
+          if (level == 0) {
+            saveList.Add(new StringBuilder());
+            saveList[level].Append(node.Data);
 
-          saveList.Add(new StringBuilder());
-          saveList[level].Append(node.Data);
+            StringBuilder tab = new StringBuilder();
 
-          StringBuilder tab = new StringBuilder();
-          
             tab.Append(' ', node.Data.ToString().Length);
-          
 
-          if (level != 0) {//Если это не корень, тк корень при добавлении двигать не надо
-            for (int i =0; i < level; i++) {// для каждой верхней строчки от нынешней
-              Console.WriteLine("use = " + saveList[i]);
-              StringBuilder buff = new StringBuilder(saveList[i].ToString());
-              Console.WriteLine("buff = " + buff);
-              saveList[i].Clear();
+          }
+          else if (level != 0) {//Если это не корень, тк корень при добавлении двигать не надо
+            int parentPosition = saveList[level - 1].ToString().IndexOf(node.Parent.Data.ToString());// находим положение родителя в верхней строчке
+            if (parentPosition == 0 && isLeft) {//если родитель стоит на 0 индексе и нужно вставить влево, то двигаем дерево
 
-              Console.WriteLine("---------------");
-              for (int c = 0; c < saveList.Count; c++)
-                Console.WriteLine(saveList[c]);
-              Console.WriteLine("---------------");
+              saveList.Add(new StringBuilder());
+              saveList[level].Append(node.Data);
+
+              StringBuilder tab = new StringBuilder();
+
+              tab.Append(' ', node.Data.ToString().Length);
+              for (int i = 0; i < level; i++) {// для каждой верхней строчки от нынешней
+                Console.WriteLine("use = " + saveList[i]);
+                StringBuilder buff = new StringBuilder(saveList[i].ToString());
+                Console.WriteLine("buff = " + buff);
+                saveList[i].Clear();
+
+                Console.WriteLine("---------------");
+                for (int c = 0; c < saveList.Count; c++)
+                  Console.WriteLine(saveList[c]);
+                Console.WriteLine("---------------");
 
 
-              //for (int a = 0; a < saveList.Count; a++) {
+                
                 saveList[i].Append(tab);
-              //}
-              saveList[i].Append(buff);
+                
+                saveList[i].Append(buff);
 
 
+              }
             }
-
+            else if (!isLeft) {
+              parentPosition += node.Parent.Data.ToString().Length;
+              //parentPosition++;
+              Console.WriteLine("parent "+ parentPosition);
+              if (saveList.Count<=level) {
+                saveList.Add(new StringBuilder());
+              }
+              var difference = parentPosition - saveList[level].ToString().Length;
+              //difference++;
+              if (difference >0) {
+                for (int i = 0; i < difference+ node.Data.ToString().Length; i++) {
+                  saveList[level].Append(" ");
+                }
+              }
+              saveList[level].Remove(parentPosition, node.Data.ToString().Length);
+              saveList[level].Insert(parentPosition, new StringBuilder(node.Data.ToString()));
+            }
+            else if (!isLeft) {
+              parentPosition += node.Parent.Data.ToString().Length;
+              //parentPosition++;
+              Console.WriteLine("parent " + parentPosition);
+              if (saveList.Count <= level) {
+                saveList.Add(new StringBuilder());
+              }
+              var difference = parentPosition - saveList[level].ToString().Length;
+              //difference++;
+              if (difference > 0) {
+                for (int i = 0; i < difference + node.Data.ToString().Length; i++) {
+                  saveList[level].Append(" ");
+                }
+              }
+              saveList[level].Remove(parentPosition, node.Data.ToString().Length);
+              saveList[level].Insert(parentPosition, new StringBuilder(node.Data.ToString()));
+            }
           }
 
 
         }
         else if (saveList.Count > level) {
           //saveList[level].Append(node.Data);
-        }*/
-
+        }
+        Console.WriteLine("---------------");
+        for (int c = 0; c < saveList.Count; c++)
+          Console.WriteLine(saveList[c]);
+        Console.WriteLine("---------------");
         if (node.Left != null) {
-          GeneraitSaveList(node.Left, level + 1);
+          GeneraitSaveList(node.Left, level + 1, true);
         }
         if (node.Right != null) {
-          GeneraitSaveList(node.Right, level + 1);
+          GeneraitSaveList(node.Right, level + 1, false);
         }
 
         /*GeneraitSaveList(node.Left, level + 1);
@@ -171,22 +220,22 @@ namespace Lab1 {
     }
 
     //SETTINGS
-/*    private void ShowSettingsMenu(object sender, MouseEventArgs e) {
-      *//*settingsBtn.ContextMenu = new ContextMenu();
+    private void ShowSettingsMenu(object sender, MouseEventArgs e) {
+      settingsBtn.ContextMenu = new ContextMenu();
       settingsBtn.ContextMenu.MenuItems.Add("Show greeting", ShowGreetingChange);
       settingsBtn.ContextMenu.MenuItems[0].Checked = bool.Parse(ConfigurationManager.AppSettings["showGreeting"]);
 
       settingsBtn.ContextMenu.Show(settingsBtn, new Point(e.X, e.Y));
-*//*
+
     }
 
     private void ShowGreetingChange(object sender, EventArgs e) {
-      *//*var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+      var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
       config.AppSettings.Settings["showGreeting"].Value = (!bool.Parse(ConfigurationManager.AppSettings["showGreeting"])).ToString();
       config.Save();
-      ConfigurationManager.RefreshSection("appSettings");*//*
+      ConfigurationManager.RefreshSection("appSettings");
     }
-*/
+
 
     //TREE
 
@@ -473,13 +522,22 @@ namespace Lab1 {
       if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Random) {
         textRandomOutput.Text = "";
         textRandomInput.Text = "";
+        buttonRemoveRandom.Enabled = false;
+
+
+        
+        
 
       }
       else if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Keyboard) {
         textKeyboardInput.Text = "";
+        buttonRemoveKeyboard.Enabled = false;
+        textKeyboardInput.Enabled = true;
+        textKeyboardInput.ReadOnly = false;
       }
       else {
         textFileOutput.Text = "";
+        buttonRemoveFile.Enabled = false;
       }
     }
 

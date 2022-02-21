@@ -76,3 +76,4 @@ C:\Users\sin2x\Desktop\Lab1 — копия\lab1\obj\Debug\lab1.exe
 C:\Users\sin2x\Desktop\Lab1 — копия\lab1\obj\Debug\lab1.pdb
 C:\Users\sin2x\Desktop\Lab1\Lab1\lab1\obj\Debug\lab1.MessageForm.resources
 C:\Users\sin2x\Desktop\laba\Lab1\lab1\obj\Debug\lab1.MessageForm.resources
+C:\Users\sin2x\Desktop\laba\Lab1\lab1\bin\Debug\App.config

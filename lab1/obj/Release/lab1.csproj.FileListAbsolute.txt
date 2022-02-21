@@ -63,7 +63,6 @@ C:\Users\sin2x\Desktop\Lab1 — копия\lab1\obj\Release\Lab1.MainForm.resour
 C:\Users\sin2x\Desktop\Lab1 — копия\lab1\obj\Release\Lab1.AddRemoveForm.resources
 C:\Users\sin2x\Desktop\Lab1\Lab1\lab1\obj\Release\Lab1.MainForm.resources
 C:\Users\sin2x\Desktop\Lab1\Lab1\lab1\obj\Release\Lab1.AddRemoveForm.resources
-C:\Users\sin2x\Desktop\laba\Lab1\lab1\bin\Release\lab1.exe.config
 C:\Users\sin2x\Desktop\laba\Lab1\lab1\bin\Release\lab1.exe
 C:\Users\sin2x\Desktop\laba\Lab1\lab1\bin\Release\lab1.pdb
 C:\Users\sin2x\Desktop\laba\Lab1\lab1\obj\Release\Lab1.csproj.AssemblyReference.cache
@@ -75,3 +74,5 @@ C:\Users\sin2x\Desktop\laba\Lab1\lab1\obj\Release\Lab1.csproj.GenerateResource.c
 C:\Users\sin2x\Desktop\laba\Lab1\lab1\obj\Release\Lab1.csproj.CoreCompileInputs.cache
 C:\Users\sin2x\Desktop\laba\Lab1\lab1\obj\Release\lab1.exe
 C:\Users\sin2x\Desktop\laba\Lab1\lab1\obj\Release\lab1.pdb
+C:\Users\sin2x\Desktop\laba\Lab1\lab1\bin\Release\App.config
+C:\Users\sin2x\Desktop\laba\Lab1\lab1\bin\Release\lab1.exe.config
