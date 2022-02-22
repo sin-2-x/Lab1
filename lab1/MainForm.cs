@@ -100,17 +100,17 @@ namespace Lab1 {
       MessageBox.Show("Файл сохранен");
     }
     private void SavelResults(object sender, EventArgs e) {
-      
+
       List<string> saveResultString = new List<string>();
       saveResultString.Add("");
-      lab1.Printer.printBinaryTree(tree, ref saveResultString);
+      lab1.Printer.printBinaryTree(tree.root, ref saveResultString);
 
       bool clear = true;
 
       for (int element = 0; element < saveResultString.Max(s => s.Length); ++element) {
         Console.WriteLine(saveResultString.Max());
         for (int stringNumber = 0; stringNumber < saveResultString.Count; stringNumber++) {
-          
+
           if (saveResultString[stringNumber].Length > element && saveResultString[stringNumber][element] != ' ') {
             clear = false;
 
@@ -118,14 +118,14 @@ namespace Lab1 {
 
         }
         if (clear) {
-          
+
           for (int stringNumber = 0; stringNumber < saveResultString.Count; stringNumber++) {
             if (saveResultString[stringNumber].Length > element) {
               saveResultString[stringNumber] = saveResultString[stringNumber].Remove(element, 1);
-             
-              
+
+
             }
-            
+
           }
           element--;
         }
@@ -147,10 +147,10 @@ namespace Lab1 {
 
 
 
-      string treePrint="";
+      string treePrint = "";
       for (int i = 0; i < saveResultString.Count; i++)
-        treePrint += saveResultString[i]+'\n';
-        System.IO.File.WriteAllText(filename, treePrint);
+        treePrint += saveResultString[i] + '\n';
+      System.IO.File.WriteAllText(filename, treePrint);
       MessageBox.Show("Файл сохранен");
 
       for (int i = 0; i < saveResultString.Count; i++) {
@@ -159,9 +159,9 @@ namespace Lab1 {
 
     }
 
-    List<StringBuilder> saveList = new List<StringBuilder>();
+    // List<StringBuilder> saveList = new List<StringBuilder>();
 
-    void GeneraitSaveList(BinaryTree node, int level, bool isLeft) {
+    /*void GeneraitSaveList(Node node, int level, bool isLeft) {
       if (node != null) {
         if (saveList.Count == level) {
           if (level == 0) {
@@ -220,27 +220,7 @@ namespace Lab1 {
               saveList[level].Remove(parentPosition, node.Data.ToString().Length);
               saveList[level].Insert(parentPosition, new StringBuilder(node.Data.ToString()));
             }
-            /*else if (!isLeft)
-            {
-                parentPosition += node.Parent.Data.ToString().Length;
-                //parentPosition++;
-                Console.WriteLine("parent " + parentPosition);
-                if (saveList.Count <= level)
-                {
-                    saveList.Add(new StringBuilder());
-                }
-                var difference = parentPosition - saveList[level].ToString().Length;
-                //difference++;
-                if (difference > 0)
-                {
-                    for (int i = 0; i < difference + node.Data.ToString().Length; i++)
-                    {
-                        saveList[level].Append(" ");
-                    }
-                }
-                saveList[level].Remove(parentPosition, node.Data.ToString().Length);
-                saveList[level].Insert(parentPosition, new StringBuilder(node.Data.ToString()));
-            }*/
+
           }
 
 
@@ -279,14 +259,11 @@ namespace Lab1 {
           GeneraitSaveList(node.Right, level + 1, false);
         }
 
-        /*GeneraitSaveList(node.Left, level + 1);
-        for (int i = 0; i < level; i++) Console.Write("   ");
-        Console.WriteLine(node.Data);
-        GeneraitSaveList(node.Right, level + 1);*/
+        
 
 
       }
-    }
+    }*/
 
     private void ShowSaveMenu(object sender, MouseEventArgs e) {
       saveBtn.ContextMenu = new ContextMenu();
@@ -336,7 +313,13 @@ namespace Lab1 {
           break;
       }
     }
-    private void PlantTree(object sender, EventArgs e) {
+    private void CreateTree(int[] arr) {
+      tree = new BinaryTree();
+      for (int i = 0; i < arr.Length; i++) {
+        tree.Insert(arr[i]);
+      }
+    }
+    private void PlantTree(object sender, EventArgs e ) {
 
       string sequenceTextForStart = "";
       Input inputWay = null;
@@ -345,10 +328,7 @@ namespace Lab1 {
       if (sequenceTextForStart.Length > 0) {
         int[] arr = inputWay.input(sequenceTextForStart); //нужный массив
 
-        tree = new BinaryTree();
-        for (int i = 0; i < arr.Length; i++) {
-          tree.Insert(arr[i]);
-        }
+        CreateTree(arr);
 
         if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Random) {
           textRandomOutput.Text = "";
@@ -370,11 +350,11 @@ namespace Lab1 {
         pictureBox.Size = new Size(scrollPanel.Width, scrollPanel.Height); //set min size and hide scrolls
         ClearPictureBox();
         leftmost = Point.Empty;
-        Print(tree, pictureBox);
+        Print(tree.root, pictureBox);
         ClearPictureBox();
         Console.WriteLine("Чистовая");
 
-        Print(tree, pictureBox, default, leftmost);
+        Print(tree.root, pictureBox, default, leftmost);
 
       }
     }
@@ -383,7 +363,7 @@ namespace Lab1 {
       ClearPictureBox();
       pictureBox.Size = scrollPanel.MinimumSize;
 
-      Print(tree, pictureBox);
+      Print(tree.root, pictureBox);
       pictureBox.Update();
       NodeForDraw.DrawLine(pictureBox);
 
@@ -393,7 +373,8 @@ namespace Lab1 {
     Point leftmost = Point.Empty;
     Point rightmost = Point.Empty;
     Point correction = new Point(40, 40);
-    public void Print(BinaryTree node, PictureBox pictureBox, Color color = default, Point a = new Point()) {
+    public void Print(Node node, PictureBox pictureBox, Color color = default, Point a = new Point()) {
+      NodeForDraw.treeTab = tabControl.SelectedTab.TabIndex;
       if (node.Data != null) {
         if (node.Parent == null) {  //Все для прорисовки корня
           Console.WriteLine("ROOT:" + node.Data);
@@ -516,7 +497,7 @@ namespace Lab1 {
 
       public static List<List<NodeForDraw>> nodeListForLines = new List<List<NodeForDraw>>();
       public static List<NodeForDraw> drawList = new List<NodeForDraw>(); //Список всех узлов для отрисовки с параметрами
-
+      public static int? treeTab = null;
       public NodeForDraw() { }
       public NodeForDraw(string text, Point loc, Color color) {
         AutoSize = true;
@@ -597,15 +578,12 @@ namespace Lab1 {
       NodeForDraw.DrawLine(pictureBox);
     }
     private void CleanBtn_Click(object sender, EventArgs e) {
+      ClearPictureBox();
+      tree = new BinaryTree();
       if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Random) {
         textRandomOutput.Text = "";
         textRandomInput.Text = "";
         buttonRemoveRandom.Enabled = false;
-
-
-
-
-
       }
       else if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Keyboard) {
         textKeyboardInput.Text = "";
@@ -659,24 +637,7 @@ namespace Lab1 {
 
 
     }
-    private void TabControl_SelectedIndexChanged(object sender, EventArgs e) {
-      /*RandomTextBoxLastCorrect = "";
-      textRandomInput.Text = "";
-      textRandomOutput.Text = "";
-      textRandomOutput.Enabled = false;
 
-
-      KeyboardTextBoxLastCorrect = "";
-      textKeyboardInput.Text = "";
-
-      textFileOutput.Text = "";
-      textFileOutput.Enabled = false;
-
-      textKeyboardInput.ReadOnly = false;
-
-      tree = null;*/
-
-    }
 
 
 
@@ -690,80 +651,77 @@ namespace Lab1 {
 
     }
     private void AddToTree(object sender, EventArgs e) {
-      if (addRemoveForm.textAddNumber.Text.Length > 0) {
-        int newNode = int.Parse(addRemoveForm.textAddNumber.Text);
-        if (tree == null || tree.Find(newNode) == null) {
-          if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Random) {
-            textRandomOutput.Text += addRemoveForm.textAddNumber.Text + " ";
-            if (textRandomInput.Text.Length > 0)
-              textRandomInput.Text = (int.Parse(textRandomInput.Text) + 1).ToString();
-            else
-              textRandomInput.Text = 1.ToString();
 
-          }
-          else if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Keyboard) {
-            textKeyboardInput.Text += " " + addRemoveForm.textAddNumber.Text + " ";
-            //newNode = int.Parse(newForm.textAddNumber.Text);
+        if (addRemoveForm.textAddNumber.Text.Length > 0) {
+          int newNode = int.Parse(addRemoveForm.textAddNumber.Text);
+          if (tree == null || tree.Find(newNode) == null) {
+            if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Random) {
+              textRandomOutput.Text += addRemoveForm.textAddNumber.Text + " ";
+              if (textRandomInput.Text.Length > 0)
+                textRandomInput.Text = (int.Parse(textRandomInput.Text) + 1).ToString();
+              else
+                textRandomInput.Text = 1.ToString();
+
+            }
+            else if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Keyboard) {
+              textKeyboardInput.Text += " " + addRemoveForm.textAddNumber.Text + " ";
+              //newNode = int.Parse(newForm.textAddNumber.Text);
+            }
+            else {
+              textFileOutput.Text += " " + addRemoveForm.textAddNumber.Text + " ";
+              //newNode = int.Parse(newForm.textAddNumber.Text);
+            }
+            if (tree == null || NodeForDraw.treeTab != tabControl.SelectedTab.TabIndex)
+              tree = new BinaryTree();
+            tree.Insert(newNode);
+            ClearPictureBox();
+            Print(tree.root, pictureBox);
           }
           else {
-            textFileOutput.Text += " " + addRemoveForm.textAddNumber.Text + " ";
-            //newNode = int.Parse(newForm.textAddNumber.Text);
+            lab1.MessageForm mes = new lab1.MessageForm(Left + Width / 2, Top + Height / 2, "Элемент уже введен.");
+            mes.ShowDialog();
           }
-          if (tree == null)
-            tree = new BinaryTree();
-          tree.Insert(newNode);
-          ClearPictureBox();
-          Print(tree, pictureBox);
-        }
-        else {
-          lab1.MessageForm mes = new lab1.MessageForm(Left + Width / 2, Top + Height / 2, "Элемент уже введен.");
-          mes.ShowDialog();
-        }
-
-
       }
-
       addRemoveForm.Close();
     }
 
     private void ButtonRemove_Click(object sender, EventArgs e) {
       addRemoveForm = new AddRemoveForm(Left + Width / 2, Top + Height / 2);
-      addRemoveForm.buttonAdd.Click += new EventHandler(this.RemoveFromTree);
+      addRemoveForm.buttonAdd.Click += new EventHandler(this.RemoveFromForm);
       addRemoveForm.ShowDialog();
     }
-    private void RemoveFromTree(object sender, EventArgs e) {
+    private void RemoveFromForm(object sender, EventArgs e) {
 
       if (addRemoveForm.textAddNumber.Text.Length > 0) {
         int newNode = int.Parse(addRemoveForm.textAddNumber.Text);
 
-        if (!(tree is null) && tree.Find(newNode) != null && tree.Data != newNode) {
+        if (!(tree is null) && tree.Find(newNode) != null) {
           if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Random) {
-            if (textRandomOutput.Text.IndexOf(" " + addRemoveForm.textAddNumber.Text + " ") != -1) {
-              textRandomOutput.Text = textRandomOutput.Text.Replace(" " + addRemoveForm.textAddNumber.Text + " ", " "); // убираем из поля вывода
+            if (textRandomOutput.Text.IndexOf(addRemoveForm.textAddNumber.Text + " ") != -1) {
+              textRandomOutput.Text = textRandomOutput.Text.Replace(addRemoveForm.textAddNumber.Text + " ", " "); // убираем из поля вывода
               if (textRandomInput.Text.Length > 0)
                 textRandomInput.Text = (int.Parse(textRandomInput.Text) - 1).ToString();
-              tree.Remove(newNode);
-              RepaintTree();
+              RemoveFromTree(newNode, textRandomOutput.Text);
             }
 
 
           }
           else if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Keyboard) {
 
-            if (textKeyboardInput.Text.IndexOf(" " + addRemoveForm.textAddNumber.Text) != -1) {
-              textKeyboardInput.Text = textKeyboardInput.Text.Replace(" " + addRemoveForm.textAddNumber.Text, ""); // убираем из поля вывода
-              tree.Remove(newNode);
-              RepaintTree();
+            if (textKeyboardInput.Text.IndexOf(addRemoveForm.textAddNumber.Text) != -1) {
+              textKeyboardInput.Text = textKeyboardInput.Text.Replace(addRemoveForm.textAddNumber.Text, ""); // убираем из поля вывода
+              //tree.Remove(newNode);
+              RemoveFromTree(newNode, textKeyboardInput.Text);
 
             }
 
 
           }
           else {
-            if (textFileOutput.Text.IndexOf(" " + addRemoveForm.textAddNumber.Text) != -1) {
-              textFileOutput.Text = textFileOutput.Text.Replace(" " + addRemoveForm.textAddNumber.Text, ""); // убираем из поля вывода
-              tree.Remove(newNode);
-              RepaintTree();
+            if (textFileOutput.Text.IndexOf(addRemoveForm.textAddNumber.Text) != -1) {
+              textFileOutput.Text = textFileOutput.Text.Replace(addRemoveForm.textAddNumber.Text, ""); // убираем из поля вывода
+              //tree.Remove(newNode);
+              RemoveFromTree(newNode,textFileOutput.Text);
             }
           }
         }
@@ -776,7 +734,17 @@ namespace Lab1 {
 
       addRemoveForm.Close();
     }
-
+    private void RemoveFromTree(int data, string newTree) {
+      if (data != tree.root.Data) {
+        tree.Remove(data);
+        RepaintTree();
+      }
+      else {
+        ClearPictureBox();
+        CreateTree(new KeyboardInput().input(newTree));
+        Print(tree.root, pictureBox);
+      }
+    }
 
 
 
@@ -890,6 +858,13 @@ namespace Lab1 {
 
     private void MainForm_SizeChanged(object sender, EventArgs e) {
 
+    }
+
+    private void textRandomOutput_TextChanged(object sender, EventArgs e) {
+      if(textRandomOutput.Text.Length>0)
+      buttonRemoveRandom.Enabled = true;
+      else
+        buttonRemoveRandom.Enabled = false;
     }
   }
 }

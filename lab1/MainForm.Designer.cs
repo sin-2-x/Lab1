@@ -103,7 +103,6 @@ namespace Lab1 {
       this.tabControl.SelectedIndex = 0;
       this.tabControl.Size = new System.Drawing.Size(649, 100);
       this.tabControl.TabIndex = 1;
-      this.tabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
       // 
       // tabRandom
       // 
@@ -183,6 +182,7 @@ namespace Lab1 {
       this.textRandomOutput.Name = "textRandomOutput";
       this.textRandomOutput.Size = new System.Drawing.Size(211, 22);
       this.textRandomOutput.TabIndex = 0;
+      this.textRandomOutput.TextChanged += new System.EventHandler(this.textRandomOutput_TextChanged);
       // 
       // tabKeyboard
       // 
@@ -326,7 +326,7 @@ namespace Lab1 {
       // saveBtn
       // 
       this.saveBtn.Location = new System.Drawing.Point(5, 15);
-      this.saveBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.saveBtn.Margin = new System.Windows.Forms.Padding(4);
       this.saveBtn.Name = "saveBtn";
       this.saveBtn.Size = new System.Drawing.Size(57, 28);
       this.saveBtn.TabIndex = 8;
@@ -337,7 +337,7 @@ namespace Lab1 {
       // 
       this.cleanBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
       this.cleanBtn.Location = new System.Drawing.Point(708, 15);
-      this.cleanBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.cleanBtn.Margin = new System.Windows.Forms.Padding(4);
       this.cleanBtn.Name = "cleanBtn";
       this.cleanBtn.Size = new System.Drawing.Size(71, 28);
       this.cleanBtn.TabIndex = 9;
@@ -349,7 +349,7 @@ namespace Lab1 {
       // 
       this.settingsBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
       this.settingsBtn.Location = new System.Drawing.Point(708, 43);
-      this.settingsBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.settingsBtn.Margin = new System.Windows.Forms.Padding(4);
       this.settingsBtn.Name = "settingsBtn";
       this.settingsBtn.Size = new System.Drawing.Size(71, 28);
       this.settingsBtn.TabIndex = 10;
