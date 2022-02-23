@@ -42,7 +42,7 @@ namespace Lab1 {
       textFileOutput.Enabled = false;
       textFileOutput.ReadOnly = true;
 
-      // Makes the tab width definable. 
+
       this.tabControl.SizeMode = TabSizeMode.Fixed;
 
       buttonAddFile.Click += new EventHandler(this.ButtonAdd_Click);
@@ -64,43 +64,49 @@ namespace Lab1 {
     }
     private void ShowGreeting(object sender, EventArgs e) {
       if (bool.Parse(ConfigurationManager.AppSettings["showGreeting"])) {
-        lab1.MessageForm mes = new lab1.MessageForm(Left + Width / 2, Top + Height / 2,
-          "Студент СПБГТИ(ТУ) \nСтарков Силантий Денисович \n403 группа\n Контрольная работа №2\n Вариант №24");
-        mes.ShowDialog();
+        new lab1.MessageForm(
+          Left + Width / 2, 
+          Top + Height / 2,
+          "Студент СПБГТИ(ТУ) \n" +
+          "Старков Силантий Денисович \n" +
+          "403 группа\nЛабораторная работа №1\n" +
+          "Вариант №1\nПостроение простого бинарного дерева").ShowDialog();
       }
     }
 
 
     //SAVE
     private void SavelData(object sender, EventArgs e) {
-      SaveFileDialog saveFileDialog = new SaveFileDialog {
+      if (tree != null && tree.root != null) {
+        SaveFileDialog saveFileDialog = new SaveFileDialog {
 
-        Filter = "Text files(*.txt)|*.txt|All files(*.*)|*.*"
-      };
+          Filter = "Text files(*.txt)|*.txt|All files(*.*)|*.*"
+        };
 
-      if (saveFileDialog.ShowDialog() == DialogResult.Cancel)
-        return;
-      string filename = saveFileDialog.FileName;
-
-
+        if (saveFileDialog.ShowDialog() == DialogResult.Cancel)
+          return;
+        string filename = saveFileDialog.FileName;
 
 
-      string data;
-      if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Random) {
-        data = textRandomOutput.Text;
 
+
+        string data;
+        if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Random) {
+          data = textRandomOutput.Text;
+
+        }
+        else if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Keyboard) {
+          data = textKeyboardInput.Text;
+        }
+        else {
+          data = textFileOutput.Text;
+        }
+        System.IO.File.WriteAllText(filename, data);
+        MessageBox.Show("Файл сохранен");
       }
-      else if (tabControl.SelectedTab.TabIndex == (int)Tabindex.Keyboard) {
-        data = textKeyboardInput.Text;
-      }
-      else {
-        data = textFileOutput.Text;
-      }
-      System.IO.File.WriteAllText(filename, data);
-      MessageBox.Show("Файл сохранен");
     }
     private void SavelResults(object sender, EventArgs e) {
-
+      if (tree != null && tree.root != null) { 
       List<string> saveResultString = new List<string>();
       saveResultString.Add("");
       lab1.Printer.printBinaryTree(tree.root, ref saveResultString);
@@ -156,7 +162,7 @@ namespace Lab1 {
       for (int i = 0; i < saveResultString.Count; i++) {
         Console.WriteLine(saveResultString[i]);
       }
-
+    }
     }
 
     // List<StringBuilder> saveList = new List<StringBuilder>();
@@ -544,7 +550,9 @@ namespace Lab1 {
         pictureBox.Update();
         if (nodeListForLines.Count != 0) {
           for (int i = 0; i < nodeListForLines.Count; i++) {
-            gr.DrawLine(new Pen(nodeListForLines[i][0].BackColor, 2), new Point(nodeListForLines[i][0].Location.X + nodeListForLines[i][0].Width / 2, nodeListForLines[i][0].Location.Y + nodeListForLines[i][0].Height / 2), new Point(nodeListForLines[i][1].Location.X + nodeListForLines[i][1].Width / 2, nodeListForLines[i][1].Location.Y + nodeListForLines[i][1].Height / 2));
+            gr.DrawLine(new Pen(nodeListForLines[i][0].BackColor, 2),
+              new Point(nodeListForLines[i][0].Location.X + nodeListForLines[i][0].Width / 2, nodeListForLines[i][0].Location.Y + nodeListForLines[i][0].Height / 2),
+              new Point(nodeListForLines[i][1].Location.X + nodeListForLines[i][1].Width / 2, nodeListForLines[i][1].Location.Y + nodeListForLines[i][1].Height / 2));
           }
         }
       }

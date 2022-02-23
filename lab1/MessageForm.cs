@@ -14,7 +14,7 @@ namespace lab1 {
       InitializeComponent();
 
       this.StartPosition = FormStartPosition.Manual;
-      this.Location = new Point(left - Width / 2, top - Height / 2);
+      
       
       this.textMessage.Text = message;
       Point magin = textMessage.Location;
@@ -23,6 +23,7 @@ namespace lab1 {
       this.MaximumSize = this.Size;
       this.MinimumSize = this.Size;
       this.FormBorderStyle = FormBorderStyle.FixedSingle;
+      this.Location = new Point(left - Width / 2, top - Height / 2);
     }
 
     private void MessageForm_Load(object sender, EventArgs e) {

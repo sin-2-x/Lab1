@@ -39,30 +39,32 @@ namespace Lab1 {
     public Node Parent { get; set; }*/
 
     public void Insert(int key) {
-      Node node = new Node(key);
-      Node y = null;
-      Node x = this.root;
+      if (Find(key)==null) {
+        Node node = new Node(key);
+        Node y = null;
+        Node x = this.root;
 
-      while (x != null) {
-        y = x;
-        if (node.Data < x.Data) {
-          x = x.Left;
+        while (x != null) {
+          y = x;
+          if (node.Data < x.Data) {
+            x = x.Left;
+          }
+          else {
+            x = x.Right;
+          }
+        }
+
+        // y is parent of x
+        node.Parent = y;
+        if (y == null) {
+          root = node;
+        }
+        else if (node.Data < y.Data) {
+          y.Left = node;
         }
         else {
-          x = x.Right;
-        }
-      }
-
-      // y is parent of x
-      node.Parent = y;
-      if (y == null) {
-        root = node;
-      }
-      else if (node.Data < y.Data) {
-        y.Left = node;
-      }
-      else {
-        y.Right = node;
+          y.Right = node;
+        } 
       }
       /*Node before = null, after = this.root;
 
