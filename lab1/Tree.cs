@@ -331,7 +331,7 @@ namespace Lab1 {
         InsertByNode(dataNode, node.Right, node);
       }
     }
-    private Node MinValue(Node node) {
+    /*private Node MinValue(Node node) {
       int? minv = node.Data;
 
       while (node.Left != null) {
@@ -341,7 +341,7 @@ namespace Lab1 {
 
       //return minv;
       return node;
-    }
+    }*/
     public Node Find(int data) {
       return this.Find(data, this.root);
     }

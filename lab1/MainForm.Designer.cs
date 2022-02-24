@@ -84,11 +84,11 @@ namespace Lab1 {
       this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
       this.pictureBox.TabIndex = 0;
       this.pictureBox.TabStop = false;
-      this.pictureBox.Click += new System.EventHandler(this.PictureBox_Click);
+      //this.pictureBox.Click += new System.EventHandler(this.PictureBox_Click);
       this.pictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.PictureBox_Paint);
-      this.pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseDown);
-      this.pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseMove);
-      this.pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
+      this.pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBox_MouseDown);
+      this.pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PictureBox_MouseMove);
+      this.pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PictureBox_MouseUp);
       // 
       // tabControl
       // 
@@ -182,7 +182,7 @@ namespace Lab1 {
       this.textRandomOutput.Name = "textRandomOutput";
       this.textRandomOutput.Size = new System.Drawing.Size(211, 22);
       this.textRandomOutput.TabIndex = 0;
-      this.textRandomOutput.TextChanged += new System.EventHandler(this.textRandomOutput_TextChanged);
+      this.textRandomOutput.TextChanged += new System.EventHandler(this.TextRandomOutput_TextChanged);
       // 
       // tabKeyboard
       // 
@@ -321,7 +321,7 @@ namespace Lab1 {
       this.textFileOutput.Name = "textFileOutput";
       this.textFileOutput.Size = new System.Drawing.Size(365, 22);
       this.textFileOutput.TabIndex = 10;
-      this.textFileOutput.TextChanged += new System.EventHandler(this.TextFileOutput_TextChanged);
+      //this.textFileOutput.TextChanged += new System.EventHandler(this.TextFileOutput_TextChanged);
       // 
       // saveBtn
       // 
@@ -372,7 +372,7 @@ namespace Lab1 {
       this.Text = "Простое бинарное дерево";
       this.Load += new System.EventHandler(this.MainForm_Load);
       this.Shown += new System.EventHandler(this.ShowGreeting);
-      this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
+      //this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
       this.scrollPanel.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
       this.tabControl.ResumeLayout(false);
