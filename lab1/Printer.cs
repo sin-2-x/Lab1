@@ -7,71 +7,106 @@ using System.Threading.Tasks;
 
 namespace lab1 {
   class Printer {
-    public static List<StringBuilder> PrintBinaryTree(Node root) {
+    public static List<StringBuilder> PrintBinaryTree(Node node) {
       List<StringBuilder> saveResultString = new List<StringBuilder> {
         new StringBuilder()
       };
 
-      LinkedList<Node> treeLevel = new LinkedList<Node>();
-      treeLevel = new LinkedList<Node>(treeLevel.Append(root));
-      //treeLevel.Add(root);
-      LinkedList<Node> temp = new LinkedList<Node>();
-      int counter = 0;
-      int height = HeightOfTree(root) - 1;
-      double numberOfElements = (Math.Pow(2, (height + 1)) - 1);
 
-      while (counter <= height) {
-        Node removed = treeLevel.First();
-        //treeLevel.RemoveFirst();
-        treeLevel.Remove(treeLevel.First());
-        if (temp.Count == 0) {
-          PrintSpace(numberOfElements / Math.Pow(2, counter + 1), removed, ref saveResultString);
-        }
-        else {
-          PrintSpace(numberOfElements / Math.Pow(2, counter), removed, ref saveResultString);
-        }
-        if (removed == null) {
-          temp = new LinkedList<Node>(temp.Append(null));
-          temp = new LinkedList<Node>(temp.Append(null));
-        }
-        else {
-          temp = new LinkedList<Node>(temp.Append(removed.Left));
-          temp = new LinkedList<Node>(temp.Append(removed.Right));
+      Queue<Node> nodes = new Queue<Node>();
+      int depth = Depth(node);
+      int numberOfSpaces;
+      int numberOfBranchParts;
+      int elemPerLevel;
+      string levelPrint = "";
+      string leftBranch;
+      string rightBranch;
+      int n = FindMaxData(node);
+      nodes.Enqueue(node);
+      for (int level = 0; level < depth; level++) {
+        numberOfSpaces = (Convert.ToInt32(Math.Pow(2, (depth - 1 - level))) - 1) * n;
+        numberOfBranchParts = ((numberOfSpaces / n - 1) / 2) * n;
+        elemPerLevel = Convert.ToInt32(Math.Pow(2, level));
+        leftBranch = string.Concat(string.Concat(Enumerable.Repeat(" ", n - 1)), "┌", string.Concat(Enumerable.Repeat("─", numberOfBranchParts)));
+        rightBranch = string.Concat(string.Concat(Enumerable.Repeat("─", numberOfBranchParts)), "┐", string.Concat(Enumerable.Repeat(" ", n - 1)));
+        for (int elemPrint = 0; elemPrint < elemPerLevel; elemPrint++) {
+          node = nodes.Dequeue();
+          if (node != null) {
+            nodes.Enqueue(node.Left);
+            nodes.Enqueue(node.Right);
+          }
+          else {
+            nodes.Enqueue(null);
+            nodes.Enqueue(null);
+          }
+          if (node != null) {
+            if (node.Left != null) {
+              levelPrint = string.Concat(levelPrint, string.Concat(Enumerable.Repeat(" ", numberOfBranchParts)), leftBranch);
+            }
+            else {
+              levelPrint = string.Concat(levelPrint, string.Concat(Enumerable.Repeat(" ", numberOfSpaces)));
+            }
+
+            levelPrint = string.Concat(levelPrint, string.Concat(Enumerable.Repeat(" ", n - node.Data.ToString().Length)), node.Data);
+
+            if (node.Right != null) {
+              levelPrint = string.Concat(levelPrint, rightBranch, string.Concat(Enumerable.Repeat(" ", numberOfBranchParts)));
+            }
+            else {
+              levelPrint = string.Concat(levelPrint, string.Concat(Enumerable.Repeat(" ", numberOfSpaces)));
+            }
+            levelPrint = string.Concat(levelPrint, string.Concat(Enumerable.Repeat(" ", n)));
+          }
+          else {
+            levelPrint = string.Concat(levelPrint, string.Concat(Enumerable.Repeat(" ", numberOfSpaces)));
+            levelPrint = string.Concat(levelPrint, string.Concat(Enumerable.Repeat(" ", n)));
+            levelPrint = string.Concat(levelPrint, string.Concat(Enumerable.Repeat(" ", numberOfSpaces)));
+            levelPrint = string.Concat(levelPrint, string.Concat(Enumerable.Repeat(" ", n)));
+          }
         }
 
-        if (treeLevel.Count == 0) {
-          //Console.WriteLine("");
-          Console.WriteLine("");
-          saveResultString.Add(new StringBuilder());
-          treeLevel = new LinkedList<Node>(temp);
-          temp.Clear();
-          counter++;
-        }
 
+        saveResultString.Add(new StringBuilder(levelPrint));
+        levelPrint = "";
+      }
+      nodes.Clear();
+
+      bool clear = true;
+      for (int element = 0; element < saveResultString.Max(s => s.Length); ++element) {
+        for (int stringNumber = 0; stringNumber < saveResultString.Count; stringNumber++) {
+          if (saveResultString[stringNumber].Length > element && saveResultString[stringNumber][element] != ' ' && saveResultString[stringNumber][element] != '─') {
+            clear = false;
+            break;
+          }
+        }
+        if (clear) {
+          for (int stringNumber = 0; stringNumber < saveResultString.Count; stringNumber++) {
+            if (saveResultString[stringNumber].Length > element)
+              saveResultString[stringNumber] = saveResultString[stringNumber].Remove(element, 1);
+          }
+          element--;
+        }
+        clear = true;
       }
       return saveResultString;
     }
 
-    public static void PrintSpace(double n, Node removed, ref List<StringBuilder> saveResultString) {
-      for (; n > 0; n--) {
-        Console.Write("    ");
-        saveResultString.ElementAt(saveResultString.Count - 1).Append("    ");
+    public static int Depth(Node node) {
+      int depth = 0;
+      if (node != null) {
+        int leftD = Depth(node.Left);
+        int rightD = Depth(node.Right);
+        depth = Math.Max(leftD, rightD) + 1;
       }
-      if (removed == null) {
-        Console.Write(" ");
-        saveResultString[saveResultString.Count - 1].Append(" ");
-      }
-      else {
-        Console.Write(removed.Data);
-        saveResultString[saveResultString.Count - 1].Append(removed.Data);
-      }
+      return depth;
     }
 
-    public static int HeightOfTree(Node root) {
-      if (root == null) {
-        return 0;
+    public static int FindMaxData(Node node) {
+
+      while (node.Right != null) {
+        node = node.Right;
       }
-      return 1 + Math.Max(HeightOfTree(root.Left), HeightOfTree(root.Right));
+      return node.Data.ToString().Length;
     }
   }
 }

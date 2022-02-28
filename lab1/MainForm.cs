@@ -49,9 +49,6 @@ namespace Lab1 {
       buttonAddKeyboard.Click += new EventHandler(this.ButtonAdd_Click);
       buttonAddRandom.Click += new EventHandler(this.ButtonAdd_Click);
 
-      /*textFileOutput.TextChanged += new EventHandler(ActivateElements);
-      textRandomOutput.TextChanged += new EventHandler(ActivateElements);
-      textKeyboardInput.TextChanged += new EventHandler(ActivateElements);*/
       buttonStartRandom.Click += new EventHandler(this.ActivateElements);
       buttonStartKeyboard.Click += new EventHandler(this.ActivateElements);
       buttonStartFile.Click += new EventHandler(this.ActivateElements);
@@ -75,7 +72,7 @@ namespace Lab1 {
     }
 
 
-    //SAVE
+    #region SAVE
     private void SavelData(object sender, EventArgs e) {
       if (tree != null && tree.root != null) {
         SaveFileDialog saveFileDialog = new SaveFileDialog {
@@ -104,23 +101,7 @@ namespace Lab1 {
     private void SavelResults(object sender, EventArgs e) {
       if (tree != null && tree.root != null) {
         var saveResultString = lab1.Printer.PrintBinaryTree(tree.root);
-        bool clear = true;
-        for (int element = 0; element < saveResultString.Max(s => s.Length); ++element) {          
-          for (int stringNumber = 0; stringNumber < saveResultString.Count; stringNumber++) {
-            if (saveResultString[stringNumber].Length > element && saveResultString[stringNumber][element] != ' ') {
-              clear = false;
-              break;
-            }
-          }
-          if (clear) {
-            for (int stringNumber = 0; stringNumber < saveResultString.Count; stringNumber++) {
-              if (saveResultString[stringNumber].Length > element) 
-                saveResultString[stringNumber] = saveResultString[stringNumber].Remove(element, 1);
-            }
-            element--;
-          }
-          clear = true;
-        }
+
         SaveFileDialog saveFileDialog = new SaveFileDialog {
           Filter = "Text files(*.txt)|*.txt|All files(*.*)|*.*"
         };
@@ -138,8 +119,6 @@ namespace Lab1 {
         }
       }
     }
-
-
     private void ShowSaveMenu(object sender, MouseEventArgs e) {
       saveBtn.ContextMenu = new ContextMenu();
       saveBtn.ContextMenu.MenuItems.Add("Save results", SavelResults);
@@ -148,8 +127,9 @@ namespace Lab1 {
       saveBtn.ContextMenu.Show(saveBtn, new Point(e.X, e.Y));
 
     }
+    #endregion
 
-    //SETTINGS
+    #region SETTINGS
     private void ShowSettingsMenu(object sender, MouseEventArgs e) {
       settingsBtn.ContextMenu = new ContextMenu();
       settingsBtn.ContextMenu.MenuItems.Add("Show greeting", ShowGreetingChange);
@@ -165,9 +145,9 @@ namespace Lab1 {
       config.Save();
       ConfigurationManager.RefreshSection("appSettings");
     }
+    #endregion
 
-
-    //TREE
+    #region TREE
 
     BinaryTree tree = null;
 
@@ -235,19 +215,14 @@ namespace Lab1 {
 
 
     Point leftmost = Point.Empty;
-    //Point rightmost = Point.Empty;
     Point correction = new Point(40, 40);
-    public void Print(Node node, PictureBox pictureBox, Color color = default, Point a = new Point()) {
+    public void Print(Node node, PictureBox pictureBox, Color color = default, Point rootLocation = new Point()) {
       NodeForDraw.treeTab = tabControl.SelectedTab.TabIndex;
       if (node.Data != null) {
         if (node.Parent == null) {  //Все для прорисовки корня
           Console.WriteLine("ROOT:" + node.Data);
-          /*
-                    //if (a.IsEmpty)
-                     // a = new Point(pictureBox.Width / 2, 0);
-                    //a.X = a.X + pictureBox.Width / 2;*/
 
-          NodeForDraw nodeDraw = new NodeForDraw(node.Data.ToString(), new Point(Math.Abs(a.X) + pictureBox.Width / 2, 0), Color.FromArgb(59, 131, 189));
+          NodeForDraw nodeDraw = new NodeForDraw(node.Data.ToString(), new Point(Math.Abs(rootLocation.X) + pictureBox.Width / 2, 0), Color.FromArgb(59, 131, 189));
 
           NodeForDraw.drawList.Add(nodeDraw);
           pictureBox.Controls.Add(nodeDraw);
@@ -396,7 +371,6 @@ namespace Lab1 {
               //DrawLine((PictureBox)nodeToMove.Parent);//Это пиздец если тут оставить
             }
           }
-
           DrawLine((PictureBox)nodeToMove.Parent);
         }
       }
@@ -431,11 +405,9 @@ namespace Lab1 {
 
 
     }
+    #endregion
 
-
-
-
-    //WINFORMS
+    #region WINFORMS
     private void ScrollPanel_SizeChanged(object sender, EventArgs e) {
       pictureBox.MinimumSize = scrollPanel.Size;
       NodeForDraw.DrawLine(pictureBox);
@@ -501,11 +473,9 @@ namespace Lab1 {
 
     }
 
+    #endregion
 
-
-
-
-    //ADD/REMOVE
+    #region ADD/REMOVE
     AddRemoveForm addRemoveForm = null;
     private void ButtonAdd_Click(object sender, EventArgs e) {
       addRemoveForm = new AddRemoveForm(this.Left + this.Width / 2, this.Top + this.Height / 2);
@@ -606,10 +576,9 @@ namespace Lab1 {
         Print(tree.root, pictureBox);
       }
     }
+    #endregion
 
-
-
-    //INPUT
+    #region INPUT
     string KeyboardTextBoxLastCorrect;
     string RandomTextBoxLastCorrect;
     private void TextKeyboardInput_TextChanged(object sender, EventArgs e) {
@@ -659,7 +628,7 @@ namespace Lab1 {
       return;
 
     }
-    
+
     private void TextRandomInput_TextChanged(object sender, EventArgs e) {
       string sequenceTextNewValue = textRandomInput.Text;
       for (int i = 0; i < sequenceTextNewValue.Length; i++) {
@@ -678,10 +647,9 @@ namespace Lab1 {
       else
         buttonRemoveRandom.Enabled = false;
     }
+    #endregion
 
-
-
-    //TREE MOVING
+    #region TREE MOVING
     private bool Dragging;
     private int xPos;
     private int yPos;
@@ -705,7 +673,8 @@ namespace Lab1 {
     private void PictureBox_MouseUp(object sender, MouseEventArgs e) {
       Dragging = false;
     }
-    
+    #endregion
+
   }
 }
 
