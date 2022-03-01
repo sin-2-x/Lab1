@@ -629,6 +629,7 @@ namespace Lab1 {
 
       textFileOutput.Text = sequenceTextNewValue;
       textFileOutput.Enabled = true;
+      PlantTree(sender, e);
       return;
 
     }
