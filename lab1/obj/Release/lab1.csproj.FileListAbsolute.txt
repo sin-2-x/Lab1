@@ -91,3 +91,16 @@ C:\Users\sin2x\Desktop\laba\Lab1 — копия (2)\lab1\obj\Release\Lab1.csproj
 C:\Users\sin2x\Desktop\laba\Lab1 — копия (2)\lab1\obj\Release\Lab1.csproj.CoreCompileInputs.cache
 C:\Users\sin2x\Desktop\laba\Lab1 — копия (2)\lab1\obj\Release\lab1.exe
 C:\Users\sin2x\Desktop\laba\Lab1 — копия (2)\lab1\obj\Release\lab1.pdb
+C:\Users\sin2x\Desktop\laba\Lab1 — копия (2) — копия\lab1\bin\Release\App.config
+C:\Users\sin2x\Desktop\laba\Lab1 — копия (2) — копия\lab1\bin\Release\lab1.exe.config
+C:\Users\sin2x\Desktop\laba\Lab1 — копия (2) — копия\lab1\bin\Release\lab1.exe
+C:\Users\sin2x\Desktop\laba\Lab1 — копия (2) — копия\lab1\bin\Release\lab1.pdb
+C:\Users\sin2x\Desktop\laba\Lab1 — копия (2) — копия\lab1\obj\Release\Lab1.csproj.AssemblyReference.cache
+C:\Users\sin2x\Desktop\laba\Lab1 — копия (2) — копия\lab1\obj\Release\lab1.MessageForm.resources
+C:\Users\sin2x\Desktop\laba\Lab1 — копия (2) — копия\lab1\obj\Release\Lab1.MainForm.resources
+C:\Users\sin2x\Desktop\laba\Lab1 — копия (2) — копия\lab1\obj\Release\Lab1.AddRemoveForm.resources
+C:\Users\sin2x\Desktop\laba\Lab1 — копия (2) — копия\lab1\obj\Release\lab1.Properties.Resources.resources
+C:\Users\sin2x\Desktop\laba\Lab1 — копия (2) — копия\lab1\obj\Release\Lab1.csproj.GenerateResource.cache
+C:\Users\sin2x\Desktop\laba\Lab1 — копия (2) — копия\lab1\obj\Release\Lab1.csproj.CoreCompileInputs.cache
+C:\Users\sin2x\Desktop\laba\Lab1 — копия (2) — копия\lab1\obj\Release\lab1.exe
+C:\Users\sin2x\Desktop\laba\Lab1 — копия (2) — копия\lab1\obj\Release\lab1.pdb

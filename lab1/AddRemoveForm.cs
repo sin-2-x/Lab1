@@ -10,20 +10,20 @@ using System.Windows.Forms;
 
 namespace Lab1 {
   public partial class AddRemoveForm : Form {
-    public AddRemoveForm(int left, int top) {
-            InitializeComponent();
-            this.StartPosition = FormStartPosition.Manual;
-            this.Location = new Point(left-Width/2, top-Height/2);
+    public AddRemoveForm(int left, int top, string capure = "") {
+      InitializeComponent();
+      this.StartPosition = FormStartPosition.Manual;
+      this.Location = new Point(left - Width / 2, top - Height / 2);
+      this.Text = capure;
 
 
-
-        }
+    }
 
     string RandomTextBoxLastCorrect = "";
     private void textAddNumber_TextChanged(object sender, EventArgs e) {
       string sequenceTextNewValue = textAddNumber.Text;
       for (int i = 0; i < sequenceTextNewValue.Length; i++) {
-        if ((sequenceTextNewValue.ElementAt(i) < '0' || sequenceTextNewValue.ElementAt(i) > '9'|| (sequenceTextNewValue.Length>1 && sequenceTextNewValue.ElementAt(0) == '0' && sequenceTextNewValue.ElementAt(1) == '0'))) {//набор алфавита
+        if ((sequenceTextNewValue.ElementAt(i) < '0' || sequenceTextNewValue.ElementAt(i) > '9' || (sequenceTextNewValue.Length > 1 && sequenceTextNewValue.ElementAt(0) == '0' && sequenceTextNewValue.ElementAt(1) == '0'))) {//набор алфавита
           textAddNumber.Text = RandomTextBoxLastCorrect;
           return;
         }
@@ -34,5 +34,5 @@ namespace Lab1 {
     }
 
 
-    }
+  }
 }

@@ -48,15 +48,22 @@ namespace Lab1 {
       this.buttonStartFile = new System.Windows.Forms.Button();
       this.buttonAddFile = new System.Windows.Forms.Button();
       this.textFileOutput = new System.Windows.Forms.TextBox();
-      this.saveBtn = new System.Windows.Forms.Button();
       this.cleanBtn = new System.Windows.Forms.Button();
-      this.settingsBtn = new System.Windows.Forms.Button();
+      this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+      this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.saveResultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.saveInnerDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.showGreetingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.scrollPanel.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
       this.tabControl.SuspendLayout();
       this.tabRandom.SuspendLayout();
       this.tabKeyboard.SuspendLayout();
       this.tabFile.SuspendLayout();
+      this.menuStrip1.SuspendLayout();
       this.SuspendLayout();
       // 
       // scrollPanel
@@ -67,10 +74,10 @@ namespace Lab1 {
       this.scrollPanel.AutoScroll = true;
       this.scrollPanel.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
       this.scrollPanel.Controls.Add(this.pictureBox);
-      this.scrollPanel.Location = new System.Drawing.Point(0, 103);
+      this.scrollPanel.Location = new System.Drawing.Point(0, 129);
       this.scrollPanel.Margin = new System.Windows.Forms.Padding(0);
       this.scrollPanel.Name = "scrollPanel";
-      this.scrollPanel.Size = new System.Drawing.Size(781, 386);
+      this.scrollPanel.Size = new System.Drawing.Size(781, 360);
       this.scrollPanel.TabIndex = 7;
       this.scrollPanel.SizeChanged += new System.EventHandler(this.ScrollPanel_SizeChanged);
       // 
@@ -80,11 +87,10 @@ namespace Lab1 {
       this.pictureBox.Location = new System.Drawing.Point(0, 0);
       this.pictureBox.Margin = new System.Windows.Forms.Padding(0);
       this.pictureBox.Name = "pictureBox";
-      this.pictureBox.Size = new System.Drawing.Size(781, 386);
+      this.pictureBox.Size = new System.Drawing.Size(781, 360);
       this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
       this.pictureBox.TabIndex = 0;
       this.pictureBox.TabStop = false;
-      //this.pictureBox.Click += new System.EventHandler(this.PictureBox_Click);
       this.pictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.PictureBox_Paint);
       this.pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBox_MouseDown);
       this.pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PictureBox_MouseMove);
@@ -97,11 +103,11 @@ namespace Lab1 {
       this.tabControl.Controls.Add(this.tabRandom);
       this.tabControl.Controls.Add(this.tabKeyboard);
       this.tabControl.Controls.Add(this.tabFile);
-      this.tabControl.Location = new System.Drawing.Point(64, 1);
+      this.tabControl.Location = new System.Drawing.Point(12, 30);
       this.tabControl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
       this.tabControl.Name = "tabControl";
       this.tabControl.SelectedIndex = 0;
-      this.tabControl.Size = new System.Drawing.Size(649, 100);
+      this.tabControl.Size = new System.Drawing.Size(694, 97);
       this.tabControl.TabIndex = 1;
       // 
       // tabRandom
@@ -194,7 +200,7 @@ namespace Lab1 {
       this.tabKeyboard.Location = new System.Drawing.Point(4, 25);
       this.tabKeyboard.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
       this.tabKeyboard.Name = "tabKeyboard";
-      this.tabKeyboard.Size = new System.Drawing.Size(641, 71);
+      this.tabKeyboard.Size = new System.Drawing.Size(686, 68);
       this.tabKeyboard.TabIndex = 2;
       this.tabKeyboard.Text = "Keyboard";
       this.tabKeyboard.UseVisualStyleBackColor = true;
@@ -202,7 +208,7 @@ namespace Lab1 {
       // buttonRemoveKeyboard
       // 
       this.buttonRemoveKeyboard.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.buttonRemoveKeyboard.Location = new System.Drawing.Point(475, 25);
+      this.buttonRemoveKeyboard.Location = new System.Drawing.Point(520, 25);
       this.buttonRemoveKeyboard.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
       this.buttonRemoveKeyboard.Name = "buttonRemoveKeyboard";
       this.buttonRemoveKeyboard.Size = new System.Drawing.Size(32, 23);
@@ -223,7 +229,7 @@ namespace Lab1 {
       // buttonStartKeyboard
       // 
       this.buttonStartKeyboard.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.buttonStartKeyboard.Location = new System.Drawing.Point(549, 25);
+      this.buttonStartKeyboard.Location = new System.Drawing.Point(594, 25);
       this.buttonStartKeyboard.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
       this.buttonStartKeyboard.Name = "buttonStartKeyboard";
       this.buttonStartKeyboard.Size = new System.Drawing.Size(75, 23);
@@ -234,7 +240,7 @@ namespace Lab1 {
       // buttonAddKeyboard
       // 
       this.buttonAddKeyboard.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.buttonAddKeyboard.Location = new System.Drawing.Point(512, 25);
+      this.buttonAddKeyboard.Location = new System.Drawing.Point(557, 25);
       this.buttonAddKeyboard.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
       this.buttonAddKeyboard.Name = "buttonAddKeyboard";
       this.buttonAddKeyboard.Size = new System.Drawing.Size(32, 23);
@@ -249,7 +255,7 @@ namespace Lab1 {
       this.textKeyboardInput.Location = new System.Drawing.Point(143, 25);
       this.textKeyboardInput.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
       this.textKeyboardInput.Name = "textKeyboardInput";
-      this.textKeyboardInput.Size = new System.Drawing.Size(325, 22);
+      this.textKeyboardInput.Size = new System.Drawing.Size(370, 22);
       this.textKeyboardInput.TabIndex = 0;
       this.textKeyboardInput.TextChanged += new System.EventHandler(this.TextKeyboardInput_TextChanged);
       // 
@@ -263,7 +269,7 @@ namespace Lab1 {
       this.tabFile.Location = new System.Drawing.Point(4, 25);
       this.tabFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
       this.tabFile.Name = "tabFile";
-      this.tabFile.Size = new System.Drawing.Size(641, 71);
+      this.tabFile.Size = new System.Drawing.Size(686, 68);
       this.tabFile.TabIndex = 3;
       this.tabFile.Text = "File";
       this.tabFile.UseVisualStyleBackColor = true;
@@ -271,7 +277,7 @@ namespace Lab1 {
       // buttonRemoveFile
       // 
       this.buttonRemoveFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.buttonRemoveFile.Location = new System.Drawing.Point(475, 25);
+      this.buttonRemoveFile.Location = new System.Drawing.Point(520, 25);
       this.buttonRemoveFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
       this.buttonRemoveFile.Name = "buttonRemoveFile";
       this.buttonRemoveFile.Size = new System.Drawing.Size(32, 23);
@@ -293,7 +299,7 @@ namespace Lab1 {
       // buttonStartFile
       // 
       this.buttonStartFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.buttonStartFile.Location = new System.Drawing.Point(549, 25);
+      this.buttonStartFile.Location = new System.Drawing.Point(594, 25);
       this.buttonStartFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
       this.buttonStartFile.Name = "buttonStartFile";
       this.buttonStartFile.Size = new System.Drawing.Size(75, 23);
@@ -304,7 +310,7 @@ namespace Lab1 {
       // buttonAddFile
       // 
       this.buttonAddFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.buttonAddFile.Location = new System.Drawing.Point(512, 25);
+      this.buttonAddFile.Location = new System.Drawing.Point(557, 25);
       this.buttonAddFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
       this.buttonAddFile.Name = "buttonAddFile";
       this.buttonAddFile.Size = new System.Drawing.Size(32, 23);
@@ -319,24 +325,13 @@ namespace Lab1 {
       this.textFileOutput.Location = new System.Drawing.Point(103, 25);
       this.textFileOutput.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
       this.textFileOutput.Name = "textFileOutput";
-      this.textFileOutput.Size = new System.Drawing.Size(365, 22);
+      this.textFileOutput.Size = new System.Drawing.Size(410, 22);
       this.textFileOutput.TabIndex = 10;
-      //this.textFileOutput.TextChanged += new System.EventHandler(this.TextFileOutput_TextChanged);
-      // 
-      // saveBtn
-      // 
-      this.saveBtn.Location = new System.Drawing.Point(5, 15);
-      this.saveBtn.Margin = new System.Windows.Forms.Padding(4);
-      this.saveBtn.Name = "saveBtn";
-      this.saveBtn.Size = new System.Drawing.Size(57, 28);
-      this.saveBtn.TabIndex = 8;
-      this.saveBtn.Text = "Save";
-      this.saveBtn.UseVisualStyleBackColor = true;
       // 
       // cleanBtn
       // 
       this.cleanBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.cleanBtn.Location = new System.Drawing.Point(708, 15);
+      this.cleanBtn.Location = new System.Drawing.Point(706, 55);
       this.cleanBtn.Margin = new System.Windows.Forms.Padding(4);
       this.cleanBtn.Name = "cleanBtn";
       this.cleanBtn.Size = new System.Drawing.Size(71, 28);
@@ -345,34 +340,85 @@ namespace Lab1 {
       this.cleanBtn.UseVisualStyleBackColor = true;
       this.cleanBtn.Click += new System.EventHandler(this.CleanBtn_Click);
       // 
-      // settingsBtn
+      // menuStrip1
       // 
-      this.settingsBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.settingsBtn.Location = new System.Drawing.Point(708, 43);
-      this.settingsBtn.Margin = new System.Windows.Forms.Padding(4);
-      this.settingsBtn.Name = "settingsBtn";
-      this.settingsBtn.Size = new System.Drawing.Size(71, 28);
-      this.settingsBtn.TabIndex = 10;
-      this.settingsBtn.Text = "Settings";
-      this.settingsBtn.UseVisualStyleBackColor = true;
+      this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+      this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.settingsToolStripMenuItem,
+            this.aboutToolStripMenuItem});
+      this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+      this.menuStrip1.Name = "menuStrip1";
+      this.menuStrip1.Size = new System.Drawing.Size(781, 28);
+      this.menuStrip1.TabIndex = 11;
+      this.menuStrip1.Text = "menuStrip1";
+      // 
+      // fileToolStripMenuItem
+      // 
+      this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem,
+            this.saveResultsToolStripMenuItem,
+            this.saveInnerDataToolStripMenuItem});
+      this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+      this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
+      this.fileToolStripMenuItem.Text = "File";
+      // 
+      // saveResultsToolStripMenuItem
+      // 
+      this.saveResultsToolStripMenuItem.Name = "saveResultsToolStripMenuItem";
+      this.saveResultsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+      this.saveResultsToolStripMenuItem.Text = "Save results";
+      // 
+      // saveInnerDataToolStripMenuItem
+      // 
+      this.saveInnerDataToolStripMenuItem.Name = "saveInnerDataToolStripMenuItem";
+      this.saveInnerDataToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+      this.saveInnerDataToolStripMenuItem.Text = "Save inner data";
+      // 
+      // settingsToolStripMenuItem
+      // 
+      this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showGreetingsToolStripMenuItem});
+      this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+      this.settingsToolStripMenuItem.Size = new System.Drawing.Size(76, 24);
+      this.settingsToolStripMenuItem.Text = "Settings";
+      // 
+      // showGreetingsToolStripMenuItem
+      // 
+      this.showGreetingsToolStripMenuItem.Checked = true;
+      this.showGreetingsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.showGreetingsToolStripMenuItem.Name = "showGreetingsToolStripMenuItem";
+      this.showGreetingsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+      this.showGreetingsToolStripMenuItem.Text = "Show greetings";
+      // 
+      // aboutToolStripMenuItem
+      // 
+      this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+      this.aboutToolStripMenuItem.Size = new System.Drawing.Size(64, 24);
+      this.aboutToolStripMenuItem.Text = "About";
+      // 
+      // openToolStripMenuItem
+      // 
+      this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+      this.openToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+      this.openToolStripMenuItem.Text = "Open";
       // 
       // MainForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(781, 489);
-      this.Controls.Add(this.settingsBtn);
       this.Controls.Add(this.cleanBtn);
-      this.Controls.Add(this.saveBtn);
       this.Controls.Add(this.tabControl);
       this.Controls.Add(this.scrollPanel);
+      this.Controls.Add(this.menuStrip1);
+      this.MainMenuStrip = this.menuStrip1;
       this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
       this.MinimumSize = new System.Drawing.Size(698, 495);
       this.Name = "MainForm";
       this.Text = "Простое бинарное дерево";
       this.Load += new System.EventHandler(this.MainForm_Load);
       this.Shown += new System.EventHandler(this.ShowGreeting);
-      //this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
       this.scrollPanel.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
       this.tabControl.ResumeLayout(false);
@@ -382,7 +428,10 @@ namespace Lab1 {
       this.tabKeyboard.PerformLayout();
       this.tabFile.ResumeLayout(false);
       this.tabFile.PerformLayout();
+      this.menuStrip1.ResumeLayout(false);
+      this.menuStrip1.PerformLayout();
       this.ResumeLayout(false);
+      this.PerformLayout();
 
     }
 
@@ -409,9 +458,15 @@ namespace Lab1 {
     private System.Windows.Forms.Button buttonRemoveRandom;
     private System.Windows.Forms.Button buttonRemoveKeyboard;
     private System.Windows.Forms.Button buttonRemoveFile;
-    private System.Windows.Forms.Button saveBtn;
     private System.Windows.Forms.Button cleanBtn;
-    private System.Windows.Forms.Button settingsBtn;
+    private System.Windows.Forms.MenuStrip menuStrip1;
+    private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem saveResultsToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem saveInnerDataToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem showGreetingsToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
   }
 }
 

@@ -18,10 +18,10 @@ namespace Lab1 {
 
 
   public class Node {
-    public int? Data; 
-    public Node Parent; 
-    public Node Left; 
-    public Node Right; 
+    public int? Data { get; set; } 
+    public Node Parent { get; set; }
+    public Node Left { get; set; }
+    public Node Right { get; set; }
 
     public Node(int? data = null) {
       this.Data = data;

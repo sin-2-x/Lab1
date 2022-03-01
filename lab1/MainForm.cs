@@ -55,25 +55,39 @@ namespace Lab1 {
 
 
 
-      saveBtn.MouseClick += new MouseEventHandler(ShowSaveMenu);
-      settingsBtn.MouseClick += new MouseEventHandler(ShowSettingsMenu);
 
+      saveResultsToolStripMenuItem.Click += new EventHandler(SavelResults);
+      saveInnerDataToolStripMenuItem.Click += new EventHandler(SavelData);
+      openToolStripMenuItem.Click+= new EventHandler(ButtonOpenFile_Click);
+
+
+      showGreetingsToolStripMenuItem.Click += new EventHandler(ShowGreetingChange);
+
+      aboutToolStripMenuItem.Click += new EventHandler(delegate (object s, EventArgs eve) { ShowGreetingForm(); });
     }
     private void ShowGreeting(object sender, EventArgs e) {
       if (bool.Parse(ConfigurationManager.AppSettings["showGreeting"])) {
-        new lab1.MessageForm(
+        ShowGreetingForm();
+        showGreetingsToolStripMenuItem.Checked = true;
+      }
+      else {
+        showGreetingsToolStripMenuItem.Checked = false;
+      }
+    }
+    private void ShowGreetingForm() {
+      new lab1.MessageForm(
           Left + Width / 2,
           Top + Height / 2,
           "Студент СПБГТИ(ТУ) \n" +
           "Старков Силантий Денисович \n" +
           "403 группа\nЛабораторная работа №1\n" +
           "Вариант №1\nПостроение простого бинарного дерева").ShowDialog();
-      }
     }
 
 
-    #region SAVE
-    private void SavelData(object sender, EventArgs e) {
+
+      #region SAVE
+      private void SavelData(object sender, EventArgs e) {
       if (tree != null && tree.root != null) {
         SaveFileDialog saveFileDialog = new SaveFileDialog {
 
@@ -119,30 +133,18 @@ namespace Lab1 {
         }
       }
     }
-    private void ShowSaveMenu(object sender, MouseEventArgs e) {
-      saveBtn.ContextMenu = new ContextMenu();
-      saveBtn.ContextMenu.MenuItems.Add("Save results", SavelResults);
-      saveBtn.ContextMenu.MenuItems.Add("Save data", SavelData);
-
-      saveBtn.ContextMenu.Show(saveBtn, new Point(e.X, e.Y));
-
-    }
+    
     #endregion
 
     #region SETTINGS
-    private void ShowSettingsMenu(object sender, MouseEventArgs e) {
-      settingsBtn.ContextMenu = new ContextMenu();
-      settingsBtn.ContextMenu.MenuItems.Add("Show greeting", ShowGreetingChange);
-      settingsBtn.ContextMenu.MenuItems[0].Checked = bool.Parse(ConfigurationManager.AppSettings["showGreeting"]);
-
-      settingsBtn.ContextMenu.Show(settingsBtn, new Point(e.X, e.Y));
-
-    }
-
     private void ShowGreetingChange(object sender, EventArgs e) {
       var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-      config.AppSettings.Settings["showGreeting"].Value = (!bool.Parse(ConfigurationManager.AppSettings["showGreeting"])).ToString();
+      bool show = !bool.Parse(ConfigurationManager.AppSettings["showGreeting"]);
+      config.AppSettings.Settings["showGreeting"].Value = (show).ToString();
       config.Save();
+      showGreetingsToolStripMenuItem.Checked = show;
+
+
       ConfigurationManager.RefreshSection("appSettings");
     }
     #endregion
@@ -478,7 +480,7 @@ namespace Lab1 {
     #region ADD/REMOVE
     AddRemoveForm addRemoveForm = null;
     private void ButtonAdd_Click(object sender, EventArgs e) {
-      addRemoveForm = new AddRemoveForm(this.Left + this.Width / 2, this.Top + this.Height / 2);
+      addRemoveForm = new AddRemoveForm(this.Left + this.Width / 2, this.Top + this.Height / 2, "Adding Node");
       addRemoveForm.buttonAdd.Click += new EventHandler(this.AddToTree);
       addRemoveForm.ShowDialog();
 
@@ -519,7 +521,7 @@ namespace Lab1 {
     }
 
     private void ButtonRemove_Click(object sender, EventArgs e) {
-      addRemoveForm = new AddRemoveForm(Left + Width / 2, Top + Height / 2);
+      addRemoveForm = new AddRemoveForm(Left + Width / 2, Top + Height / 2, "Removing Node");
       addRemoveForm.buttonAdd.Click += new EventHandler(this.RemoveFromForm);
       addRemoveForm.ShowDialog();
     }
@@ -604,6 +606,8 @@ namespace Lab1 {
     }
 
     private void ButtonOpenFile_Click(object sender, EventArgs e) {
+      tabControl.SelectTab((int)Tabindex.File-1);
+
       OpenFileDialog openFileDialog = new OpenFileDialog {
         Filter = "Text files(*.txt)|*.txt|All files(*.*)|*.*"
       };
