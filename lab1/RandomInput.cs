@@ -26,16 +26,4 @@ namespace Lab1.Properties {
   }
 }
 
-/*
- public class RandomInput extends Input{
-    @Override
-     public int[] input(String inputStr){
-        int size = Integer.parseInt(inputStr);
-        int[] arr = new int[size];
-        for (int i = 0; i<size; i++){
-            arr[i] = (int)(Math.random()*i*60 - Math.random()*i*60);
-        }
-        return arr;
-    }
-}
- */
+

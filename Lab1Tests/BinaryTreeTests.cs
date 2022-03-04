@@ -11,11 +11,6 @@ namespace Lab1.Tests {
   public class BinaryTreeTests {
     private static BinaryTree tree;
 
-   /* private BinaryTree CreateTree() {
-      
-    }*/
-
-
     [TestMethod()]
     public void Test_1_Insert() {
       tree = new BinaryTree {
